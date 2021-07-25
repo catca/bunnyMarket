@@ -1,0 +1,221 @@
+@charset "UTF-8";
+/*                /////////content///////////               */
+.content {
+    margin: 0;
+    width: 100vw;
+}
+.wrap_content {
+    display: flex;
+    flex-direction: column;
+ }
+/*               ///////////////content header//////////            */
+.content_header {
+    width: 100vw;
+    background-color: white;
+}
+.content_header_nav {
+    width: 1080px;
+    margin: auto;
+    display: flex;
+    align-content: center;
+}
+.content_header_nav > div {
+    width: 120px;
+    height: 70px;
+    line-height: 70px;
+}
+.content_header_list::after {
+    content: '\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0|';
+}
+.content_inner {
+    display: flex;
+    flex-direction: column;
+}
+.content_inner_main {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 1080px;
+    margin: auto;
+    display: flex;
+    font-size: 18px;
+}
+.content_inner_section > h2 {
+    display: block;
+    font-size: 26px;
+    height: 100px;
+    line-height: 100px;
+    border-bottom: solid 1px black;
+}
+.content_inner_section > h2 > span {
+    color: red;
+    font-size: 16px;
+    margin-left: 32px;
+}
+/*               //////////content 겹치는 부분//////////          */
+.inner_list_wrap {
+    display: flex;
+    padding: 30px 0;
+    border-bottom: solid 1px #e9e9e9;
+}
+.inner_title {
+    width: 150px;
+}
+.inner_title > span {
+    color: red;
+}
+.inner_desc_wrap {
+    margin-left: 30px;
+    position: relative;
+}
+/*                 ///////////////////////////                  */
+.product_image {
+    display: block;
+    width: 200px;
+    height: 200px;
+    background-color: #dfdfdf;
+    text-align: center;
+    line-height: 200px;
+    cursor: pointer;
+}
+.image_desc {
+    font-size: 14px;
+    color: dodgerblue;
+    margin-top: 30px;
+}
+.register_image_wrap {
+    display: flex;
+    width: 430px;
+    height: 200px;
+    justify-content: space-between;
+}
+.register_image_wrap > div {
+    width: 200px;
+}
+.register_image_main {
+    display: none;
+}
+.register_image_thumbnail {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+.board_title_title {
+    line-height: 30px;
+}
+.board_title_desc {
+    display: flex;
+}
+#boardTitleInput {
+    width: 650px;
+    height: 30px;
+}
+#boardTitleInputQuantity {
+    margin-left: 20px;
+    line-height: 32px;
+    font-size: 13px;
+}
+.category_desc_wrap {
+    width: 720px;
+    height: 340px;
+}
+.category_class {
+    height: 300px;
+    display: flex;
+}
+.category_class > div {
+    width: 240px;
+    padding: 10px 0;
+    border: solid 1px #e9e9e9;
+}
+.category_class > div:nth-child(2) {
+    border-left: 0;
+    border-right: 0;
+}
+.category_class li {
+    width: 100%;
+    height: 40px;
+}
+.category_class button {
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
+    background-color: white;
+    border: 0;
+    outline: 0;
+}
+.medium_category {
+    text-align: center;
+    line-height: 280px;
+}
+.small_category {
+    text-align: center;
+    line-height: 280px;
+}
+#locationInput {
+    width: 650px;
+    height: 30px;
+}
+#locationInputQuantity {
+    margin-left: 20px;
+    line-height: 32px;
+    font-size: 13px;
+}
+#priceInput {
+    width: 180px;
+    height: 30px;
+}
+.price_desc {
+    margin-top: 14px;
+}
+textarea {
+    width: 700px;
+    height: 160px;
+    resize: none;
+}
+#quantityInput {
+    width: 180px;
+    height: 30px;
+}
+#descInputQuantity {
+    float: right;
+    margin-left: 20px;
+    line-height: 32px;
+    font-size: 13px;
+}
+.content_register_wrap {
+    width: 100vw;
+    height: 90px;
+    position: sticky;
+    bottom: 0;
+    background-color: #fbfbfb;
+}
+.content_register {
+    width: 1080px;
+    margin: auto;
+}
+.register_button {
+    width: 160px;
+    height: 56px;
+    float: right;
+    margin-top: 12px;
+    background-color: deepskyblue;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    line-height: 56px;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.register_finish_wrap {
+    background-color: deepskyblue;
+    width: 300px;
+    height: 500px;
+    position: fixed;
+    display: none;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+}
