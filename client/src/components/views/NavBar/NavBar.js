@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import RightMenu from './Sections/RightMenu';
 import Search from './Search';
-// import NavRouter from './Sections/NavRouter';
+import NavRouter from './Sections/NavRouter';
 import { Drawer, Button, Icon } from 'antd';
 import './Sections/Navbar.css';
 
@@ -51,12 +51,12 @@ function NavBar() {
                 </div>
                 <div style={{width: '920px', display: 'flex', justifyContent: 'space-between'}}>
                     <Search />
-                    {/* <NavRouter /> */}
+                    <NavRouter />
                 </div>
             </div>
             <div style={{width: '1100px', height: '40px'}}>
                 <div className="menu__logo">
-                    <div>카테고리</div>
+                    <div></div>
                 </div>
             </div>
         </nav>

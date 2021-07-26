@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer'); 
-const { default: NavRouter } = require('../../client/src/components/views/NavBar/Sections/NavRouter');
 // const { User } = require("../models/User");
 
 var storage = multer.diskStorage({
@@ -27,7 +26,7 @@ var upload = multer({ storage: storage }).single("file")
 //=================================
 
 router.post("/new", (req, res) => {
-    console.log(req)
+    console.log(req.body)
     return res.status(200).json({
         success: true
     });

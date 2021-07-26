@@ -4,7 +4,6 @@ import { loginUser } from "../../../_actions/user_actions";
 import { modalClose } from '../../../_actions/modal_actions';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from "react-redux";
-import "./LoginPage.css";
 
 function LoginPage(props) {
     const dispatch = useDispatch();
@@ -42,7 +41,7 @@ function LoginPage(props) {
     }
 
     return (
-        <div className="login-wrapper" style={{height: '400px'}}>
+        <div style={{height: '200px'}}>
             <div style={{ textAlign: 'center' }}>
                 <h3>로그인</h3>
             </div>

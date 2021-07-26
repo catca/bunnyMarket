@@ -4,11 +4,17 @@ import axios from "axios";
 import { PRODUCT_SERVER } from "../../Config";
 import { useForm } from 'react-hook-form';
 import { useSelector } from "react-redux";
+import CategoryPage from "./CategoryPage";
 import './ProductRegisterPage.css'
+import nodemon from "nodemon";
 
 function ProductRegisterPage() {
     const { register, watch, formState: { errors }, handleSubmit } = useForm();
     const user = useSelector(state => state.user);
+    const [largeCategory, setLargeCategory] = useState({});
+    const [mediumCategory, setMediumCategory] = useState({});
+    const [smallCategory, setSmallCategory] = useState({});
+
     const onSubmit = (values) => {
         const files = values.image;
         let formData = new FormData;
@@ -23,7 +29,10 @@ function ProductRegisterPage() {
                 const dataToSubmit = {
                     ...values,
                     filePath: response.data.filePath,
-                    fileName: response.data.fileName
+                    fileName: response.data.fileName,
+                    largeCategory: largeCategory.title,
+                    mediumCategory: mediumCategory.title,
+                    smallCategory: smallCategory.title
                 };
                 axios.post(`${PRODUCT_SERVER}/new`, dataToSubmit)
                 .then(response => {
@@ -108,35 +117,14 @@ function ProductRegisterPage() {
                                 </li>
                                 <li className="category_wrap inner_list_wrap">
                                     <div className="category_title inner_title">카테고리<span>*</span></div>
-                                    <div className="category_desc_wrap inner_desc_wrap">
-                                        <div className="category_class">
-                                            <div className="large_category">
-                                                <ul className="large_category_ul">
-                                                    <li className="large_category_list">
-                                                        <button type="button" className="woman_clothes_button">여성의류</button>
-                                                    </li>
-                                                    <li className="large_category_list">
-                                                        <button type="button" className="fashion_button">패션잡화</button>
-                                                    </li>
-                                                    <li className="large_category_list">
-                                                        <button type="button" className="man_clothes_button">남성의류</button>
-                                                    </li>
-                                                    <li className="large_category_list">
-                                                        <button type="button" className="">디지털/가전</button>
-                                                    </li>
-                                                    <li className="large_category_list">
-                                                        <button type="button" className="">스포츠/레저</button>
-                                                    </li>
-                                                    <li className="large_category_list">
-                                                        <button type="button" className="">뷰티/미용</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="medium_category">중분류 선택</div>
-                                            <div className="small_category">소분류 선택</div>
-                                        </div>
-                                        <h3 className="category_selected">선택한 카테고리 : <b></b></h3>
-                                    </div>
+                                    <CategoryPage 
+                                        largeCategory={largeCategory} 
+                                        mediumCategory={mediumCategory} 
+                                        smallCategory={smallCategory} 
+                                        setLargeCategory={setLargeCategory}
+                                        setMediumCategory={setMediumCategory}
+                                        setSmallCategory={setSmallCategory}
+                                    />
                                 </li>
                                 <li className="location_wrap inner_list_wrap">
                                     <div className="inner_title">거래지역<span>*</span></div>
