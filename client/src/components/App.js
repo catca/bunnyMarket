@@ -8,6 +8,7 @@ import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer";
 import ProductRegisterPage from './views/ProductPage/ProductRegisterPage';
 // import PrivateRoute from '../hoc/PrivateRoute';
+// import SuperRoute from '../hoc/SuperRoute';
 
 //null   Anyone Can go inside
 //true   only logged in user can go inside
@@ -20,11 +21,8 @@ function App() {
       <div style={{ paddingTop: '180px', minHeight: 'calc(100vh - 180px)' }}>
         <Switch>
           <Route exact path="/" component={Auth(MainPage, null)} />
-          <Route path="/partner" component={MainPage} />
-          <Route path="/post" component={MainPage} />
-          <Route path="/feed" component={MainPage} />
-          <Route path="/login" component={Auth(LoginPage, false)} />
-          <Route path="/register" component={Auth(RegisterPage, false)} />
+          <Route path="/login" component={Auth(LoginPage, null)} />
+          <Route path="/register" component={Auth(RegisterPage, null)} />
           <Route path="/products/new" component={ProductRegisterPage} />
         </Switch>
       </div>

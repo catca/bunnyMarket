@@ -1,7 +1,7 @@
 .auth-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 70vh;
     justify-content: center;
   }
   
@@ -24,7 +24,7 @@
   }
   
   .auth-wrapper .p {
-    color: rgb(255, 71, 129);
+    color: skyblue;
   }
   
   .auth-wrapper p::before {
@@ -54,7 +54,7 @@
   
   .auth-wrapper button[type="submit"],
   .auth-wrapper input[type="submit"] {
-    background: rgb(255, 71, 129);
+    background: skyblue;
     color: white;
     text-transform: uppercase;
     border: none;
@@ -67,7 +67,7 @@
   
   .auth-wrapper button[type="submit"]:hover,
   .auth-wrapper input[type="submit"]:hover {
-    background: rgb(255, 71, 129);
+    background: skyblue;
   }
   
   .auth-wrapper button[type="submit"]:active,

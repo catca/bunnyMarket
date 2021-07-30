@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { modalOpen, modalClose } from '../../../../_actions/modal_actions';
 import { Modal } from 'antd';
@@ -36,22 +36,20 @@ function RightMenu(props) {
     const logoutHandler = () => {
         axios.get(`${USER_SERVER}/logout`).then(response => {
             if (response.status === 200) {
-                props.history.push("/login");
+                alert('로그아웃')
             } else {
                 alert('Log Out Failed')
             }
         });
     };
-
-
     if (user.userData && !user.userData.isAuth) {
         return (
             <LinkContainer>
                 <div>
-                    <StyledLink onClick={showModal}>로그인</StyledLink>
+                    <StyledButton onClick={showModal}>로그인</StyledButton>
                 </div>
                 <div>
-                    <StyledLink >회원가입</StyledLink>
+                    <StyledLink to="/register">회원가입</StyledLink>
                 </div>
                 <Modal
                     title="바니마켓"
@@ -76,7 +74,19 @@ function RightMenu(props) {
     }
 }
 
-const StyledLink = styled.button`
+const StyledButton = styled.button`
+    // font-size: 16px;
+    color: black;
+    border: none;
+    outline: none;
+    width: 80px;
+    cursor: pointer;
+    background-color: white;
+    &:hover {
+        color: skyblue;
+    }
+`;
+const StyledLink = styled(Link)`
     // font-size: 16px;
     color: black;
     border: none;

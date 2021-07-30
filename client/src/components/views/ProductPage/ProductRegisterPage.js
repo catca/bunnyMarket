@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Link, withRouter } from 'react-router-dom';
 import axios from "axios";
 import { PRODUCT_SERVER } from "../../Config";
@@ -6,10 +6,9 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from "react-redux";
 import CategoryPage from "./CategoryPage";
 import './ProductRegisterPage.css'
-import nodemon from "nodemon";
 
 function ProductRegisterPage() {
-    const { register, watch, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const user = useSelector(state => state.user);
     const [largeCategory, setLargeCategory] = useState({});
     const [mediumCategory, setMediumCategory] = useState({});
@@ -17,24 +16,27 @@ function ProductRegisterPage() {
 
     const onSubmit = (values) => {
         const files = values.image;
-        let formData = new FormData;
+        let formData = new FormData();
         const config = {
             header: {'content-type': 'multipart/form-data'}
         }
         formData.append("file", files[0])
 
-        axios.post(`${PRODUCT_SERVER}/uploadfiles`, formData, config)
+        axios.post(`http://localhost:5000${PRODUCT_SERVER}/uploadfiles`, formData, config)
             .then(response => {
                 console.log(response);
+                const date = new Date;
                 const dataToSubmit = {
                     ...values,
+                    email: user.userData.email,
                     filePath: response.data.filePath,
                     fileName: response.data.fileName,
                     largeCategory: largeCategory.title,
                     mediumCategory: mediumCategory.title,
-                    smallCategory: smallCategory.title
+                    smallCategory: smallCategory.title,
+                    newDate: date.toString()
                 };
-                axios.post(`${PRODUCT_SERVER}/new`, dataToSubmit)
+                axios.post(`http://localhost:5000${PRODUCT_SERVER}/new`, dataToSubmit)
                 .then(response => {
                     console.log(response)
                     // if (response.payload.loginSuccess) {
@@ -43,6 +45,7 @@ function ProductRegisterPage() {
                     // } else {
                     //     setFormErrorMessage('Check out your Account or Password again')
                     // }
+                    alert("등록되었습니다");
                 })
                 .catch(err => {
                     // setFormErrorMessage('Check out your Account or Password again')
@@ -88,6 +91,7 @@ function ProductRegisterPage() {
                                             <label className="product_image" htmlFor="productImage">이미지 등록</label>
                                             <input 
                                                 type="file" id="productImage" accept="image/jpg, image/jpeg, image/png" multiple="" style={{ display: 'none' }} 
+                                                onChange={(e)=>alert('hi')}
                                                 {...register("image", { required: true })}
                                             />
                                             {errors.image && <p style={{color: 'skyblue'}}>상품 사진을 등록해주세요.</p>}
@@ -109,7 +113,10 @@ function ProductRegisterPage() {
                                     <div className="board_title_desc_wrap inner_desc_wrap">
                                         <div className="board_title_desc">
                                             <div className="board_title_input_wrap">
-                                                <input type="text" placeholder="상품 제목을 입력해주세요." id="boardTitleInput" />
+                                                <input 
+                                                    type="text" placeholder="상품 제목을 입력해주세요." id="boardTitleInput" 
+                                                    {...register("title", { required: true })}
+                                                />
                                             </div>
                                             <div id="boardTitleInputQuantity">0/40</div>
                                         </div>

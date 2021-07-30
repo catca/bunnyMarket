@@ -16,11 +16,11 @@ function CategoryPage({ largeCategory, setLargeCategory, mediumCategory, setMedi
     useEffect(() => {
         setMediumCategory({});
         setSmallCategory({});
-    }, [largeCategory])
+    }, [largeCategory, setMediumCategory, setSmallCategory])
 
     useEffect(() => {
         setSmallCategory({});
-    }, [mediumCategory])
+    }, [mediumCategory, setSmallCategory])
 
     return (
         <div className="category_desc_wrap inner_desc_wrap">

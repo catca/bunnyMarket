@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { auth } from '../_actions/user_actions';
+import { modalOpen } from '../_actions/modal_actions';
 import { useSelector, useDispatch } from "react-redux";
 
 export default function (SpecificComponent, option, adminRoute = null) {
@@ -15,7 +16,8 @@ export default function (SpecificComponent, option, adminRoute = null) {
                 //Not Loggined in Status 
                 if (!response.payload.isAuth) {
                     if (option) {
-                        props.history.push('/login')
+                        props.history.go(-1);
+                        dispatch(modalOpen());
                     }
                     //Loggined in Status 
                 } else {

@@ -25,7 +25,7 @@
     line-height: 70px;
 }
 .content_header_list::after {
-    content: '\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0|';
+    content: '\00a0\00a0\00a0\00a0\00a0\00a0|';
 }
 .content_inner {
     display: flex;

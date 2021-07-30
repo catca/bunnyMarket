@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer'); 
-// const { User } = require("../models/User");
+const { Product } = require("../models/Product");
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -27,8 +27,13 @@ var upload = multer({ storage: storage }).single("file")
 
 router.post("/new", (req, res) => {
     console.log(req.body)
-    return res.status(200).json({
-        success: true
+    const product = new Product(req.body);
+
+    product.save((err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+            success: true
+        });
     });
 });
 
@@ -40,6 +45,14 @@ router.post("/uploadfiles", (req, res) => {
         }
         return res.json({ success: true, filePath: res.req.file.path, fileName: res.req.file.filename })
     })
+});
+
+router.get("/main", (req, res) => {
+    Product.find()
+        .exec((err, products) => {
+            if(err) return res.status(400).send(err);
+            res.status(200).json({ success: true, products})
+        })
 });
 
 module.exports = router;
