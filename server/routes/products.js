@@ -55,4 +55,13 @@ router.get("/main", (req, res) => {
         })
 });
 
+router.post("/getProduct", (req, res) => {
+
+    Product.findOne({ "_id" : req.body.productId })
+    .exec((err, product) => {
+        if(err) return res.status(400).send(err);
+        res.status(200).json({ success: true, product })
+    })
+});
+
 module.exports = router;
