@@ -8,6 +8,7 @@ import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer";
 import ProductRegisterPage from './views/ProductPage/ProductRegisterPage';
 import DetailProductPage from './views/DetailProductPage/DetailProductPage';
+import ProductUpdatePage from './views/ProductPage/ProductUpdatePage';
 // import PrivateRoute from '../hoc/PrivateRoute';
 // import SuperRoute from '../hoc/SuperRoute';
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login" component={Auth(LoginPage, null)} />
           <Route path="/register" component={Auth(RegisterPage, null)} />
           <Route path="/products/new" component={ProductRegisterPage} />
+          <Route path="/products/manage" component={ProductUpdatePage} />
           <Route path="/products/:productId" component={DetailProductPage} />
         </Switch>
       </div>
