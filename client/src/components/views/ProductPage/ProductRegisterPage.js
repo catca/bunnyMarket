@@ -25,7 +25,7 @@ function ProductRegisterPage() {
         axios.post(`http://localhost:5000${PRODUCT_SERVER}/uploadfiles`, formData, config)
             .then(response => {
                 console.log(response);
-                const date = new Date;
+                const date = new Date();
                 const dataToSubmit = {
                     ...values,
                     email: user.userData.email,

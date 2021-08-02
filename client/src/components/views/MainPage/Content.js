@@ -39,7 +39,7 @@ function Content() {
             <Link to={`/products/${product._id}`} key={index}>
                 <div className="product">
                     <div className="product__thumb">
-                        <img src={`http://localhost:5000/${product.filePath}`} alt="${product.title}" />
+                        <img src={`http://localhost:5000/${product.filePath}`} alt={product.title} />
                     </div>
                     <div className="product__content">
                         <div className="product__title">{product.title}</div>
