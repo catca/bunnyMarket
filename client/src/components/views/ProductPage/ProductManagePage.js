@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
-import faker from "faker/locale/ko";
+import React, { useState, useMemo, useEffect } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 // import "./ProductManagePage.css"
 import styled from "styled-components";
 
@@ -9,15 +10,25 @@ const Th = styled.th`
 `;
 
 const Td = styled.td`
+    min-width: ${props => props.width}px;
     height: 168px;
-    padding: 0.5rem;
     border: 1px solid black;
+    vertical-align: middle;
+    padding: 8px;
+    line-height: 0;
+    text-align: center;
+`;
+
+const Img = styled.img`
+    width: 152px;
+    height: 152px;
+    object-fit: cover;
 `;
 
 function Table({ columns, data }) {
 
     return (
-        <table>
+        <table style={{borderCollapse: 'collapse'}}>
             <thead>
                 <tr>
                     {columns.map((column, index) => (
@@ -26,12 +37,13 @@ function Table({ columns, data }) {
                 </tr>
             </thead>
             <tbody>
-                {data.map(({ image, title, price}) => (
-                    <tr key={price}>
-                        <Td style={{width: '168px'}}>
-                            <img src={'hello'} alt="" />
+                {data.map((props, index) => (
+                    <tr key={index}>
+                        <Td width={168}>
+                            {console.log(props)}
+                            <Img src={`http://localhost:5000/${props.filePath}`} alt="곰돌이"/>
                         </Td>
-                        <Td style={{width: '128px'}}>
+                        <Td width={128}>
                             <div>
                                 <div>
                                     <div>
@@ -41,11 +53,11 @@ function Table({ columns, data }) {
                                 </div>
                             </div>
                         </Td>
-                        <Td style={{width: '248px'}}>{title}</Td>
-                        <Td style={{width: '224px'}}>{price}원</Td>
-                        <Td style={{width: '72px'}}>0/0</Td>
-                        <Td style={{width: '120px'}}>date</Td>
-                        <Td style={{width: '64px'}}>
+                        <Td width={248}>{props.title}</Td>
+                        <Td width={176}>{props.price}원</Td>
+                        <Td width={120}>0/0</Td>
+                        <Td width={120}>{props.newDate}</Td>
+                        <Td width={64}>
                             <div>수정</div>
                         </Td>
                     </tr>
@@ -56,6 +68,12 @@ function Table({ columns, data }) {
 }
 
 function ProductManagePage() {
+    const user = useSelector(state => state.user);
+    const [product, setProduct] = useState([])
+    const userVariable = {
+        userId: user.userData.email
+    }   
+
     const columns = useMemo(
         () => [
             {
@@ -90,22 +108,24 @@ function ProductManagePage() {
         []
     );
 
-    const data = useMemo(
-        () =>
-            Array(10)
-                .fill()
-                .map(() => ({
-                    image: faker.name.lastName() + faker.name.firstName(),
-                    title: faker.internet.email(),
-                    price: faker.phone.phoneNumber(),
-                })),
-        []
-    );
+    useEffect(() => {
+        axios.post('/api/products/productManage', userVariable)
+            .then(response => {
+                if (response.data.success) {
+                    console.log(response.data.product)
+                    setProduct(response.data.product)
+                } else {
+                    alert('Failed to get video Info')
+                }
+            })
+
+    }, [])
 
     return(
         <div style={{width: '100vw', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <main style={{width: '1024px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                <Table columns={columns} data={data} />
+            <main style={{width: '1024px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                <div style={{width: '100%'}}>search</div>
+                {product && <Table columns={columns} data={product} />}
             </main>
         </div>
         

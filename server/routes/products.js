@@ -64,4 +64,13 @@ router.post("/getProduct", (req, res) => {
     })
 });
 
+router.post("/productManage", (req, res) => {
+    console.log(res.body);
+    Product.find({ "email" : req.body.userId })
+    .exec((err, product) => {
+        if(err) return res.status(400).send(err);
+        res.status(200).json({ success: true, product })
+    })
+});
+
 module.exports = router;

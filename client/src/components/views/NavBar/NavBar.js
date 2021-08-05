@@ -19,7 +19,7 @@ function NavBar() {
     return (
         <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%', height: '180px', display: 'flex', alignItems: 'center', flexDirection: 'column', borderBottom: 'solid 1px #EEEEEE' }}>
             <div style={{width: '100%', display: 'flex', justifyContent: 'center', borderBottom: 'solid 1px #EEEEEE'}}>
-                <div style={{width: '1100px'}}>
+                <div style={{width: '1024px'}}>
                     <div className="menu__container">
                         <div className="menu_rigth">
                             <RightMenu mode="horizontal" />
@@ -45,7 +45,7 @@ function NavBar() {
                     </div>
                 </div>
             </div>
-            <div style={{width: '1100px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <div style={{width: '1024px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <div className="menu__logo">
                     <a href="/">바니마켓</a>
                 </div>
@@ -54,7 +54,7 @@ function NavBar() {
                     <NavRouter />
                 </div>
             </div>
-            <div style={{width: '1100px', height: '40px'}}>
+            <div style={{width: '1024px', height: '40px'}}>
                 <div className="menu__logo">
                     <div></div>
                 </div>
