@@ -36,7 +36,7 @@ function Content() {
         }
 
         return (
-            <Link to={`/products/${product._id}`} key={index}>
+            <Link to={`/products/${product._id}`} key={index} style={{height: '278px'}}>
                 <div className="product">
                     <div className="product__thumb">
                         <img src={`http://localhost:5000/${product.filePath}`} alt={product.title} />

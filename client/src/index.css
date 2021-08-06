@@ -5,6 +5,10 @@ body {
   background-color: #fff;
 }
 
+.ant-scrolling-effect{
+  width: 100%!important;
+}
+
 .app {
   flex-direction: column;
   display: flex;

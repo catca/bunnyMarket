@@ -46,7 +46,7 @@ function DetailProductPage(props) {
 
         return (
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <main style={{width: '1100px'}}>
+                <main style={{width: '1024px'}}>
                     <div>
                         <div style={{ width: '100%', height: '78px', padding: '30px 0 20px', display: 'flex', alignItems: 'center', borderBottom: 'solid 2px #666666'}}>
                             <div style={{ display: 'flex', alignItems: 'center'}}>
@@ -58,7 +58,7 @@ function DetailProductPage(props) {
                                     <FiChevronRight />
                                     <div>
                                         <CategorySelect>
-                                            <span>동물</span>
+                                            <span>{product.largeCategory}</span>
                                             <FiChevronDown/>
                                         </CategorySelect>
                                         <CatengoryList></CatengoryList>
@@ -68,7 +68,7 @@ function DetailProductPage(props) {
                                     <FiChevronRight />
                                     <div>
                                         <CategorySelect>
-                                            <span>포유류</span>
+                                            <span>{product.mediumCategory}</span>
                                             <FiChevronDown/>
                                         </CategorySelect>
                                         <CatengoryList></CatengoryList>
@@ -78,7 +78,7 @@ function DetailProductPage(props) {
                                     <FiChevronRight />
                                     <div>
                                         <CategorySelect>
-                                            <span>곰</span>
+                                            <span>{product.smallCategory}</span>
                                             <FiChevronDown/>
                                         </CategorySelect>
                                         <CatengoryList></CatengoryList>
@@ -95,7 +95,7 @@ function DetailProductPage(props) {
                                 </div>
                                 <div>
                                     <div style={{ height: '350px', marginBottom: '24px'}}>
-                                        <div style={{ width: '630px', height: '130px', padding: '0 0 30px', borderBottom: 'solid 1px #CCCCCC'}}>
+                                        <div style={{ width: '554px', height: '130px', padding: '0 0 30px', borderBottom: 'solid 1px #CCCCCC'}}>
                                             <div style={{ fontSize: '28px', height: '35px', marginBottom: '25px' }}>{product.title}</div>
                                             <div>
                                                 <div style={{ fontSize: '40px' }}>

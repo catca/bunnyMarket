@@ -9,7 +9,7 @@ import { Modal } from 'antd';
 import styled from 'styled-components';
 import LoginPage from '../../LoginPage/LoginPage';
 
-function RightMenu(props) {
+function RightMenu() {
     const user = useSelector(state => state.user);
     const visible = useSelector(state => state.modal.visible);
     const dispatch = useDispatch();
@@ -111,6 +111,7 @@ const LinkContainer = styled.div`
     height: 60px;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
 `;
 
 export default withRouter(RightMenu);

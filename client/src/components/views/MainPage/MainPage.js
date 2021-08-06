@@ -12,8 +12,8 @@ const Img = styled.img`
 function MainPage() {
 
     return (
-        <section style={{ display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '1100px', height: '1000px' }}>
+        <section style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <div style={{ width: '1024px', height: '1000px' }}>
                 <Carousel autoplay>
                     <div>
                         <Img src={'http://localhost:5000/server/sliderImage/662404945.jpg'} alt="" />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, withRouter } from 'react-router-dom';
 import axios from "axios";
 import { PRODUCT_SERVER } from "../../Config";
@@ -8,8 +8,9 @@ import CategoryPage from "./CategoryPage";
 import './ProductRegisterPage.css'
 
 function ProductRegisterPage() {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, setValue } = useForm();
     const user = useSelector(state => state.user);
+    const [fileUrl, setFileUrl] = useState(null);
     const [largeCategory, setLargeCategory] = useState({});
     const [mediumCategory, setMediumCategory] = useState({});
     const [smallCategory, setSmallCategory] = useState({});
@@ -39,35 +40,24 @@ function ProductRegisterPage() {
                 axios.post(`http://localhost:5000${PRODUCT_SERVER}/new`, dataToSubmit)
                 .then(response => {
                     console.log(response)
-                    // if (response.payload.loginSuccess) {
-                    //     props.history.push("/");
-                    //     dispatch(modalClose());
-                    // } else {
-                    //     setFormErrorMessage('Check out your Account or Password again')
-                    // }
                     alert("등록되었습니다");
                 })
                 .catch(err => {
-                    // setFormErrorMessage('Check out your Account or Password again')
-                    // setTimeout(() => {
-                    //     setFormErrorMessage("")
-                    // }, 3000);
                 });
             })
     }
-    // const onDrop = (files) => {
-    //     console.log(files);
-    //     let formData = new FormData;
-    //     const config = {
-    //         header: {'content-type': 'multipart/form-data'}
-    //     }
-    //     formData.append("file", files[0])
 
-    //     axios.post(`${PRODUCT_SERVER}/new`, formData, config)
-    //         .then(response => {
-    //             console.log(response)
-    //         })
-    // }
+    useEffect(() => {
+        register("image", { required: true });
+      }, []);
+
+    const onchange = (event) => {
+        setValue("image", event.target.files)
+        const imageFile = event.target.files[0];
+        const imageUrl = URL.createObjectURL(imageFile);
+        setFileUrl(imageUrl)
+    }
+    
     return (
         <main className="content">
             <div className="wrap_content">
@@ -91,15 +81,16 @@ function ProductRegisterPage() {
                                             <label className="product_image" htmlFor="productImage">이미지 등록</label>
                                             <input 
                                                 type="file" id="productImage" accept="image/jpg, image/jpeg, image/png" multiple="" style={{ display: 'none' }} 
-                                                onChange={(e)=>alert('hi')}
-                                                {...register("image", { required: true })}
+                                                onChange={onchange}
                                             />
                                             {errors.image && <p style={{color: 'skyblue'}}>상품 사진을 등록해주세요.</p>}
-                                            <div className="register_image_main">
-                                                <div>
-                                                    <div><img className="register_image_thumbnail" alt=""/></div>
+                                            {fileUrl && 
+                                                <div className="register_image_main">
+                                                    <div>
+                                                        <div><img src={fileUrl} className="register_image_thumbnail" alt=""/></div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            }
                                         </div>
                                         <div className="image_desc"><b>* 상품 이미지는 640x640에 최적화 되어 있습니다.</b><br />- 이미지는
                                             상품등록 시 정사각형으로 짤려서 등록됩니다.<br />- 이미지를 클릭 할 경우 원본이미지를 확인할 수 있습니다.<br />- 이미지를 클릭 후
