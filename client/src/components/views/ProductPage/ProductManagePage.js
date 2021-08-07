@@ -61,7 +61,7 @@ function Table({ columns, data }) {
                                     </div>
                                 </div>
                             </Td>
-                            <Td width={248}><Link to={`/${props._id}`}>{props.title}</Link></Td>
+                            <Td width={248}><Link to={`/products/${props._id}`}>{props.title}</Link></Td>
                             <Td width={176}>{price}원</Td>
                             <Td width={120}>0/0</Td>
                             <Td width={120}>{props.newDate}</Td>
@@ -125,7 +125,7 @@ function ProductManagePage() {
     );
 
     useEffect(() => {
-        axios.post('/api/products/productManage', userVariable)
+        axios.post('http://localhost:5000/api/products/productManage', userVariable)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data.product)

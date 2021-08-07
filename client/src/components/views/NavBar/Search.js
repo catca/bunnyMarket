@@ -1,14 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FiSearch } from 'react-icons/fi';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 function Search() {
+    const [keyword, setKeyword] = useState('');
+    const history = useHistory();
+    const onchange = (e) => {
+        setKeyword(e.target.value);
+    }
+    // useEffect(() => {
+    //     console.log(keyword);
+    // }, [keyword])
+    const onclick = () => {
+        history.push(`/search/products?q=${keyword}`);
+    }
+    const onkeypress = (e) => {
+        if(e.key == "Enter"){
+            e.preventDefault();
+            onclick();
+        } 
+    }
     return (
         <div style={{height: '60px', display: 'flex'}}>
             <SearchBox>
                 <form>
-                    <InputSearch /> 
-                    <SearchBtn><FiSearch color='skyblue'/></SearchBtn>
+                    <InputSearch type="text" placeholder="상품명 입력" onChange={onchange} onKeyPress={onkeypress}/> 
+                    <SearchBtn type="button" onClick={onclick}><FiSearch color='skyblue'/></SearchBtn>
                 </form>
             </SearchBox>
         </div>
@@ -23,7 +41,7 @@ const SearchBox = styled.div`
     justify-content: center;
     align-items:center;
     border-radius: 2px;
-    border: 1px solid skyblue;
+    border: 3px solid skyblue;
 `;
 const InputSearch = styled.input`
     width:450px;

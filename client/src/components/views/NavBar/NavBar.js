@@ -54,7 +54,7 @@ function NavBar() {
                     <NavRouter />
                 </div>
             </div>
-            <div style={{width: '1024px', height: '40px', background: 'skyblue'}}>
+            <div style={{width: '1024px', height: '40px'}}>
                 <div className="menu__logo">
                     <div></div>
                 </div>

@@ -9,6 +9,7 @@ import Footer from "./views/Footer/Footer";
 import ProductRegisterPage from './views/ProductPage/ProductRegisterPage';
 import DetailProductPage from './views/DetailProductPage/DetailProductPage';
 import ProductManagePage from './views/ProductPage/ProductManagePage';
+import SearchPage from './views/SearchPage/SearchPage';
 // import PrivateRoute from '../hoc/PrivateRoute';
 // import SuperRoute from '../hoc/SuperRoute';
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/products/new" component={ProductRegisterPage} />
           <Route path="/products/manage" component={ProductManagePage} />
           <Route path="/products/:productId" component={DetailProductPage} />
+          <Route path="/search/products" component={SearchPage} />
         </Switch>
       </div>
       <Footer />

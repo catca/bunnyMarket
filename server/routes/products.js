@@ -26,7 +26,6 @@ var upload = multer({ storage: storage }).single("file")
 //=================================
 
 router.post("/new", (req, res) => {
-    console.log(req.body)
     const product = new Product(req.body);
 
     product.save((err, doc) => {
@@ -65,10 +64,21 @@ router.post("/getProduct", (req, res) => {
 });
 
 router.post("/productManage", (req, res) => {
-    console.log(res.body);
     Product.find({ "email" : req.body.userId })
     .exec((err, product) => {
         if(err) return res.status(400).send(err);
+        res.status(200).json({ success: true, product })
+    })
+});
+
+router.post("/search", (req, res) => {
+    console.log(req.body);
+    Product.find({ title : new RegExp(req.body.productTitle) })
+    .exec((err, product) => {
+        if(err){ 
+            console.log(err);
+            return res.status(400).send(err);
+        }
         res.status(200).json({ success: true, product })
     })
 });
