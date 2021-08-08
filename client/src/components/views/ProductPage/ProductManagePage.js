@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { PRODUCT_SERVER, SERVER } from "../../Config";
 // import "./ProductManagePage.css"
 import styled from "styled-components";
 
@@ -49,7 +50,7 @@ function Table({ columns, data }) {
                         <tr key={index}>
                             <Td width={168}>
                                 {console.log(props)}
-                                <Img src={`http://localhost:5000/${props.filePath}`} alt="곰돌이" />
+                                <Img src={`${SERVER}/${props.filePath}`} alt="곰돌이" />
                             </Td>
                             <Td width={128}>
                                 <div>
@@ -125,7 +126,7 @@ function ProductManagePage() {
     );
 
     useEffect(() => {
-        axios.post('http://localhost:5000/api/products/productManage', userVariable)
+        axios.post(`${PRODUCT_SERVER}/productManage`, userVariable)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data.product)

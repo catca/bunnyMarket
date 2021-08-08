@@ -19,7 +19,10 @@ export function registerUser(dataToSubmit){
 
 export function loginUser(dataToSubmit){
     const request = axios.post(`${USER_SERVER}/login`,dataToSubmit)
-                .then(response => response.data);
+                .then(response => {
+                    console.log(response.data);
+                    document.cookie = `w_auth=${response.data.w_auth}`
+                });
 
     return {
         type: LOGIN_USER,
@@ -28,7 +31,13 @@ export function loginUser(dataToSubmit){
 }
 
 export function auth(){
-    const request = axios.get(`${USER_SERVER}/auth`)
+    const getCookie = (name) => {
+        const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return value? value[2] : null;
+    };
+    const token = getCookie('w_auth')
+
+    const request = axios.post(`${USER_SERVER}/auth`, { token: token })
     .then(response => response.data);
 
     return {

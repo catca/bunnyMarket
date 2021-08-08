@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { PRODUCT_SERVER, SERVER } from '../../Config';
 import { AiOutlineHome, AiFillHeart, AiFillEye } from 'react-icons/ai'
 import { FiChevronRight, FiChevronDown } from 'react-icons/fi'
 import { BsClockFill } from 'react-icons/bs'
@@ -15,7 +16,7 @@ function DetailProductPage(props) {
     }   
 
     useEffect(() => {
-        axios.post('/api/products/getProduct', productVariable)
+        axios.post(`${PRODUCT_SERVER}/getProduct`, productVariable)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data)
@@ -90,7 +91,7 @@ function DetailProductPage(props) {
                             <div style={{ width: '100%', height: '490px', padding: '30px 0', display: 'flex'}}>
                                 <div style={{ marginRight: '40px' }}>
                                     <div>
-                                        <img src={`http://localhost:5000/${product.filePath}`} alt="이미지" style={{ width: '430px', height: '430px', objectFit: 'cover'}}/>
+                                        <img src={`${SERVER}/${product.filePath}`} alt="이미지" style={{ width: '430px', height: '430px', objectFit: 'cover'}}/>
                                     </div>
                                 </div>
                                 <div>

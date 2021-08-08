@@ -36,7 +36,12 @@ function RightMenu() {
     const logoutHandler = () => {
         axios.get(`${USER_SERVER}/logout`).then(response => {
             if (response.status === 200) {
-                alert('로그아웃')
+                alert('로그아웃');
+                const deleteCookie = function(name) {
+                    const date = new Date();
+                    document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
+                }
+                deleteCookie('w_auth');
             } else {
                 alert('Log Out Failed')
             }

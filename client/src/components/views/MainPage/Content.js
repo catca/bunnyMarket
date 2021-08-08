@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
-import { PRODUCT_SERVER } from '../../Config';
+import { PRODUCT_SERVER, SERVER } from '../../Config';
 
 function Content() {
     const [product, setProduct] = useState([])
     useEffect(() => {
-        Axios.get(`http://localhost:5000${PRODUCT_SERVER}/main`)
+        Axios.get(`${PRODUCT_SERVER}/main`)
         .then(response => {
             if(response.data.success) {
                 console.log(response.data);
@@ -39,7 +39,7 @@ function Content() {
             <Link to={`/products/${product._id}`} key={index} style={{height: '278px'}}>
                 <div className="product">
                     <div className="product__thumb">
-                        <img src={`http://localhost:5000/${product.filePath}`} alt={product.title} />
+                        <img src={`${SERVER}/${product.filePath}`} alt={product.title} />
                     </div>
                     <div className="product__content">
                         <div className="product__title">{product.title}</div>

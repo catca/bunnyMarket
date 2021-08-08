@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router';
 import queryString from 'query-string';
+import { PRODUCT_SERVER, SERVER } from '../../Config';
 import './SearchPage.css';
 
 
@@ -16,7 +17,7 @@ function SearchPage() {
 
     useEffect(() => {
         console.log(productVariable)
-        axios.post('http://localhost:5000/api/products/search', productVariable)
+        axios.post(`${PRODUCT_SERVER}/search`, productVariable)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data.product)
@@ -49,7 +50,7 @@ function SearchPage() {
         return (
             <div className="content_product_wrap" key={index}>
                 <div className="product_img_wrap">
-                    <a href="/detail?no=${product.no}"><img className="product_img" src={`http://localhost:5000/${product.filePath}`} alt="${product.title}" /></a>
+                    <a href="/detail?no=${product.no}"><img className="product_img" src={`${SERVER}/${product.filePath}`} alt="${product.title}" /></a>
                 </div>
                 <div className="product_article_wrap">
                     <div className="product_title">{product.title}</div>

@@ -38,7 +38,6 @@ router.post("/new", (req, res) => {
 
 router.post("/uploadfiles", (req, res) => {
     upload(req, res, err => {
-        console.log(err);
         if (err) {
             return res.json({ success: false, err })
         }
@@ -72,7 +71,6 @@ router.post("/productManage", (req, res) => {
 });
 
 router.post("/search", (req, res) => {
-    console.log(req.body);
     Product.find({ title : new RegExp(req.body.productTitle) })
     .exec((err, product) => {
         if(err){ 

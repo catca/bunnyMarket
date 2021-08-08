@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Content from './Content';
+import { SERVER } from '../../Config';
 import { Carousel } from 'antd';
 import './Main.css';
 
@@ -16,16 +17,16 @@ function MainPage() {
             <div style={{ width: '1024px', height: '1000px' }}>
                 <Carousel autoplay>
                     <div>
-                        <Img src={'http://localhost:5000/server/sliderImage/662404945.jpg'} alt="" />
+                        <Img src={`${SERVER}/server/sliderImage/662404945.jpg`} alt="" />
                     </div>
                     <div>
-                        <Img src={'http://localhost:5000/server/sliderImage/668577671.jpg'} alt="" />
+                        <Img src={`${SERVER}/server/sliderImage/668577671.jpg`} alt="" />
                     </div>
                     <div>
-                        <Img src={'http://localhost:5000/server/sliderImage/668587539.jpg'} alt="" />
+                        <Img src={`${SERVER}/server/sliderImage/668587539.jpg`} alt="" />
                     </div>
                     <div>
-                        <Img src={'http://localhost:5000/server/sliderImage/669233812.jpg'} alt="" />
+                        <Img src={`${SERVER}/server/sliderImage/669233812.jpg`} alt="" />
                     </div>
                 </Carousel>
                 <Content />

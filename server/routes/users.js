@@ -8,7 +8,7 @@ const { auth } = require("../middleware/auth");
 //             User
 //=================================
 
-router.get("/auth", auth, (req, res) => {
+router.post("/auth", auth, (req, res) => {
     res.status(200).json({
         _id: req.user._id,
         isAdmin: req.user.role === 0 ? false : true,
@@ -47,12 +47,12 @@ router.post("/login", (req, res) => {
 
             user.generateToken((err, user) => {
                 if (err) return res.status(400).send(err);
-                res.cookie("w_authExp", user.tokenExp);
+                res.cookie("w_authExp", user.tokenExp, { httpOnly: true, secure: false });
                 res
-                    .cookie("w_auth", user.token)
+                    .cookie("w_auth", user.token, { httpOnly: true, secure: false })
                     .status(200)
                     .json({
-                        loginSuccess: true, userId: user._id
+                        loginSuccess: true, userId: user._id, w_auth: user.token
                     });
             });
         });

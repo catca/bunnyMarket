@@ -23,7 +23,7 @@ function ProductRegisterPage() {
         }
         formData.append("file", files[0])
 
-        axios.post(`http://localhost:5000${PRODUCT_SERVER}/uploadfiles`, formData, config)
+        axios.post(`${PRODUCT_SERVER}/uploadfiles`, formData, config)
             .then(response => {
                 console.log(response);
                 const date = new Date();
@@ -37,7 +37,7 @@ function ProductRegisterPage() {
                     smallCategory: smallCategory.title,
                     newDate: date.toString()
                 };
-                axios.post(`http://localhost:5000${PRODUCT_SERVER}/new`, dataToSubmit)
+                axios.post(`${PRODUCT_SERVER}/new`, dataToSubmit)
                 .then(response => {
                     console.log(response)
                     alert("등록되었습니다");
