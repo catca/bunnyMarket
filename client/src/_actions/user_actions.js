@@ -20,8 +20,8 @@ export function registerUser(dataToSubmit){
 export function loginUser(dataToSubmit){
     const request = axios.post(`${USER_SERVER}/login`,dataToSubmit)
                 .then(response => {
-                    console.log(response.data);
                     document.cookie = `w_auth=${response.data.w_auth}`
+                    return response.data;
                 });
 
     return {

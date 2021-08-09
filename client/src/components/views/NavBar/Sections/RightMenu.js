@@ -4,6 +4,7 @@ import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
+import { auth } from '../../../../_actions/user_actions';
 import { modalOpen, modalClose } from '../../../../_actions/modal_actions';
 import { Modal } from 'antd';
 import styled from 'styled-components';
@@ -42,6 +43,7 @@ function RightMenu() {
                     document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
                 }
                 deleteCookie('w_auth');
+                dispatch(auth());
             } else {
                 alert('Log Out Failed')
             }

@@ -27,7 +27,7 @@
 .content_header_list::after {
     content: '\00a0\00a0\00a0\00a0\00a0\00a0|';
 }
-.content_inner {
+.wrap_content > .content_inner {
     display: flex;
     flex-direction: column;
 }

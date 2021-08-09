@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { withRouter } from "react-router-dom";
-import { loginUser } from "../../../_actions/user_actions";
+import { auth, loginUser } from "../../../_actions/user_actions";
 import { modalClose } from '../../../_actions/modal_actions';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from "react-redux";
@@ -25,8 +25,8 @@ function LoginPage(props) {
             dispatch(loginUser(dataToSubmit))
                 .then(response => {
                     if (response.payload.loginSuccess) {
-                        props.history.push("/");
                         dispatch(modalClose());
+                        dispatch(auth());
                     } else {
                         setFormErrorMessage('Check out your Account or Password again')
                     }
