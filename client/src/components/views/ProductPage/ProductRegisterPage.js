@@ -35,7 +35,8 @@ function ProductRegisterPage() {
                     largeCategory: largeCategory.title,
                     mediumCategory: mediumCategory.title,
                     smallCategory: smallCategory.title,
-                    newDate: date.toString()
+                    newDate: date,
+                    salesStatus: 'sale'
                 };
                 axios.post(`${PRODUCT_SERVER}/new`, dataToSubmit)
                 .then(response => {

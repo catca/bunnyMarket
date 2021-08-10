@@ -25,6 +25,11 @@ var upload = multer({ storage: storage }).single("file")
 //             Product
 //=================================
 
+function modifyDate(date){
+    const kst = date.getTime() + (date.getTimezoneOffset() * 60 * 1000);
+    return kst
+}
+
 router.post("/new", (req, res) => {
     const product = new Product(req.body);
 
@@ -49,6 +54,10 @@ router.get("/main", (req, res) => {
     Product.find()
         .exec((err, products) => {
             if(err) return res.status(400).send(err);
+            products.map(product => {
+                product.newDate = modifyDate(product.newDate);
+                if(product.modifyDate) product.modifyDate = modifyDate(product.modifyDate);
+            })
             res.status(200).json({ success: true, products})
         })
 });
@@ -58,6 +67,8 @@ router.post("/getProduct", (req, res) => {
     Product.findOne({ "_id" : req.body.productId })
     .exec((err, product) => {
         if(err) return res.status(400).send(err);
+        product.newDate = modifyDate(product.newDate);
+        if(product.modifyDate) product.modifyDate = modifyDate(product.modifyDate);
         res.status(200).json({ success: true, product })
     })
 });
@@ -66,6 +77,10 @@ router.post("/productManage", (req, res) => {
     Product.find({ "email" : req.body.userId })
     .exec((err, product) => {
         if(err) return res.status(400).send(err);
+        product.map(product => {
+            product.newDate = modifyDate(product.newDate);
+            if(product.modifyDate) product.modifyDate = modifyDate(product.modifyDate);
+        })
         res.status(200).json({ success: true, product })
     })
 });
@@ -77,6 +92,10 @@ router.post("/search", (req, res) => {
             console.log(err);
             return res.status(400).send(err);
         }
+        product.map(product => {
+            product.newDate = modifyDate(product.newDate);
+            if(product.modifyDate) product.modifyDate = modifyDate(product.modifyDate);
+        })
         res.status(200).json({ success: true, product })
     })
 });

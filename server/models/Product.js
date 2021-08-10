@@ -1,8 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const jwt = require('jsonwebtoken');
-const moment = require("moment");
 
 const productSchema = mongoose.Schema({
     email: {
@@ -51,50 +47,41 @@ const productSchema = mongoose.Schema({
         type:String
     },
     newDate: {
-        type:String
+        type:Date
     },
     modifyDate: {
-        type:String
+        type:Date
+    },
+    sellsStatus: {
+        tpe:String
     }
 })
 
+function modifyDate(date){
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const today = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    const milliseconds = date.getMilliseconds();
+    return new Date(Date.UTC(year, month, today, hours, minutes, seconds, milliseconds));
+}
 
-// productSchema.pre('save', function( next ) {
-//     var user = this;
+productSchema.pre('save', function( next ) {
+    let product = this;
     
-//     if(user.isModified('password')){    
-//         // console.log('password changed')
-//         bcrypt.genSalt(saltRounds, function(err, salt){
-//             if(err) return next(err);
+    product.newDate = modifyDate(product.newDate);
+    if(product.modifyDate) product.modifyDate = modifyDate(product.modifyDate);
+    next();
+});
+
+productSchema.pre('find', function( next ) {
+    let product = this;
     
-//             bcrypt.hash(user.password, salt, function(err, hash){
-//                 if(err) return next(err);
-//                 user.password = hash 
-//                 next()
-//             })
-//         })
-//     } else {
-//         next()
-//     }
-// });
-
-// productSchema.methods.comparePassword = function(plainPassword,cb){
-//     bcrypt.compare(plainPassword, this.password, function(err, isMatch){
-//         if (err) return cb(err);
-//         cb(null, isMatch)
-//     })
-// }
-
-// productSchema.statics.findByToken = function (token, cb) {
-//     var user = this;
-
-//     jwt.verify(token,'secret',function(err, decode){
-//         user.findOne({"_id":decode, "token":token}, function(err, user){
-//             if(err) return cb(err);
-//             cb(null, user);
-//         })
-//     })
-// }
+    console.log(product.schema.obj.newDate);
+    next();
+});
 
 const Product = mongoose.model('Product', productSchema);
 

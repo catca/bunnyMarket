@@ -34,7 +34,7 @@ function Content() {
         } else {
             date = `${parseInt((nowDate - newDate) / (1000 * 60 * 60 * 24))} 일전`
         }
-
+        
         return (
             <Link to={`/products/${product._id}`} key={index} style={{height: '278px'}}>
                 <div className="product">
