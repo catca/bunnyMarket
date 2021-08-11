@@ -55,7 +55,7 @@ function CategoryPage({ largeCategory, setLargeCategory, mediumCategory, setMedi
                     </ul>
                 </div>
             </div>
-            <h3 style={{marginTop: '22px', color: 'blue'}}>선택한 카테고리 : 
+            <h3 style={{marginTop: '22px', color: 'deepskyblue'}}>선택한 카테고리 : 
             <b>{largeCategory.title !== undefined ? ` ${largeCategory.title}` : null}</b>
             <b>{mediumCategory.title !== undefined ? ` > ${mediumCategory.title}` : null}</b>
             <b>{smallCategory.title !== undefined ? ` > ${smallCategory.title}` : null}</b>
@@ -68,7 +68,7 @@ const Button = styled.div`
     height: 100%;
     line-height: 40px;
     padding-left: 12px;
-    color: ${props => props.current.title === props.title ? 'blue' : 'black'};
+    color: ${props => props.current.title === props.title ? 'deepskyblue' : 'black'};
     cursor: pointer;
     &:hover {
         background-color: rgb(244, 244, 250);

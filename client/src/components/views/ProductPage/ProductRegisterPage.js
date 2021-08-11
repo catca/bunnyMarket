@@ -5,7 +5,14 @@ import { PRODUCT_SERVER } from "../../Config";
 import { useForm } from 'react-hook-form';
 import { useSelector } from "react-redux";
 import CategoryPage from "./CategoryPage";
+import styled from "styled-components";
 import './ProductRegisterPage.css'
+
+const ErrorP = styled.p`
+    color: deepskyblue;
+    margin-top: 8px;
+    margin-left: 4px;
+`;
 
 function ProductRegisterPage() {
     const { register, formState: { errors }, handleSubmit, setValue } = useForm();
@@ -65,8 +72,8 @@ function ProductRegisterPage() {
                 <div className="content_header">
                     <nav className="content_header_nav">
                         <div className="content_header_list"><Link to="/products/new">상품등록</Link></div>
-                        <div className="content_header_list"><Link to="/products/manage">상품관리</Link></div>
-                        {/* <div className=""><a href="https://pay2.bunjang.co.kr?tab=purchases" target="_blank" rel="" className="">구매/판매 내역</a>
+                        <div><Link to="/products/manage">상품관리</Link></div>
+                        {/* <div><a href="https://pay2.bunjang.co.kr?tab=purchases" target="_blank" rel="">구매/판매 내역</a>
                         </div> */}
                     </nav>
                 </div>
@@ -84,7 +91,7 @@ function ProductRegisterPage() {
                                                 type="file" id="productImage" accept="image/jpg, image/jpeg, image/png" multiple="" style={{ display: 'none' }} 
                                                 onChange={onchange}
                                             />
-                                            {errors.image && <p style={{color: 'skyblue'}}>상품 사진을 등록해주세요.</p>}
+                                            {errors.image && <p style={{color: 'deepskyblue'}}>상품 사진을 등록해주세요.</p>}
                                             {fileUrl && 
                                                 <div className="register_image_main">
                                                     <div>
@@ -94,9 +101,8 @@ function ProductRegisterPage() {
                                             }
                                         </div>
                                         <div className="image_desc"><b>* 상품 이미지는 640x640에 최적화 되어 있습니다.</b><br />- 이미지는
-                                            상품등록 시 정사각형으로 짤려서 등록됩니다.<br />- 이미지를 클릭 할 경우 원본이미지를 확인할 수 있습니다.<br />- 이미지를 클릭 후
-                                            이동하여 등록순서를 변경할 수 있습니다.<br />- 큰 이미지일경우 이미지가 깨지는 경우가 발생할 수 있습니다.<br />최대 지원 사이즈인
-                                            640 X 640 으로 리사이즈 해서 올려주세요.(개당 이미지 최대 10M)
+                                            상품등록 시 정사각형으로 짤려서 등록됩니다.<br />- 큰 이미지일경우 이미지가 깨지는 경우가 발생할 수 있습니다.<br />최대 지원 사이즈인
+                                            640 X 640 으로 리사이즈 해서 올려주세요.
                                         </div>
                                     </div>
                                 </li>
@@ -112,6 +118,7 @@ function ProductRegisterPage() {
                                             </div>
                                             <div id="boardTitleInputQuantity">0/40</div>
                                         </div>
+                                        {errors.title && <ErrorP>상품 제목을 입력해주세요.</ErrorP>}
                                     </div>
                                 </li>
                                 <li className="category_wrap inner_list_wrap">
@@ -129,7 +136,7 @@ function ProductRegisterPage() {
                                     <div className="inner_title">거래지역<span>*</span></div>
                                     <div className="location_desc_wrap inner_desc_wrap">
                                         <div className="board_title_desc">
-                                            <div className="">
+                                            <div>
                                                 <input 
                                                     placeholder="선호 거래 지역을 입력해주세요." id="locationInput"
                                                     {...register("location", { required: true })}
@@ -137,21 +144,24 @@ function ProductRegisterPage() {
                                             </div>
                                             <div id="locationInputQuantity">0/40</div>
                                         </div>
+                                        {errors.location && <ErrorP>선호 거래 지역을 입력해주세요.</ErrorP>}
                                     </div>
                                 </li>
                                 <li className="status_wrap inner_list_wrap">
                                     <div className="inner_title">상태<span>*</span></div>
                                     <div className="inner_desc_wrap">
-                                        <div className="">
-                                            <label htmlFor="usedProduct" className="">
+                                        <div>
+                                            <label htmlFor="usedProduct" style={{marginRight:'10px'}}>
                                                 <input 
-                                                    id="usedProduct" name="status" type="radio" value="use"
+                                                    id="usedProduct" name="status" type="radio" value="use" checked="use" 
                                                     {...register("status", { required: true })}
+                                                    style={{marginRight:'2px'}}
                                                 />중고상품</label>
-                                            <label htmlFor="newProduct" className="">
+                                            <label htmlFor="newProduct">
                                                 <input 
                                                     id="newProduct" name="status" type="radio" value="new" 
                                                     {...register("status", { required: true })}
+                                                    style={{marginRight:'2px'}}
                                                 />새상품</label>
                                         </div>
                                     </div>
@@ -159,16 +169,18 @@ function ProductRegisterPage() {
                                 <li className="exchange_wrap inner_list_wrap">
                                     <div className="inner_title">교환<span>*</span></div>
                                     <div className="inner_desc_wrap">
-                                        <div className="">
-                                            <label htmlFor="교환불가" className="">
+                                        <div>
+                                            <label htmlFor="교환불가" style={{marginRight:'10px'}}>
                                                 <input 
-                                                    id="교환불가" name="exchanges" type="radio" value="no" 
+                                                    id="교환불가" name="exchanges" type="radio" value="no" checked="no" 
                                                     {...register("exchanges", { required: true })}
+                                                    style={{marginRight:'2px'}}
                                                 />교환불가</label>
-                                            <label htmlFor="교환가능" className="">
+                                            <label htmlFor="교환가능">
                                                 <input 
                                                     id="교환가능" name="exchanges" type="radio" value="yes" 
                                                     {...register("exchanges", { required: true })}
+                                                    style={{marginRight:'2px'}}
                                                 />교환가능 </label>
                                         </div>
                                     </div>
@@ -176,14 +188,16 @@ function ProductRegisterPage() {
                                 <li className="price_wrap inner_list_wrap">
                                     <div className="inner_title">가격<span>*</span></div>
                                     <div className="inner_desc_wrap">
-                                        <div className="">
+                                        <div>
                                             <input 
                                                 placeholder="숫자만 입력해주세요." id="priceInput"
-                                                {...register("price", { required: true })}
+                                                {...register("price", { required: true, pattern: /^[0-9]+$/i })}
                                             />&nbsp;&nbsp;&nbsp;원
                                         </div>
+                                        {errors.price && (errors.price.type === 'required' && <ErrorP>가격을 입력해주세요.</ErrorP>)}
+                                        {errors.price && (errors.price.type === 'pattern' && <ErrorP>숫자만 입력해주세요.</ErrorP>)}
                                         <div className="price_desc">
-                                            <div className=""><label htmlFor="freesShipping" className="">
+                                            <div><label htmlFor="freesShipping">
                                                 {/* <input id="freesShipping" type="checkbox" />배송비 포함 */}
                                                 </label>
                                             </div>
@@ -196,21 +210,24 @@ function ProductRegisterPage() {
                                         <textarea 
                                             placeholder="상품 설명을 입력해주세요." rows="6" id="descInput"
                                             {...register("description", { required: true })}
-                                        />
-                                        <div className="">
+                                            />
+                                        <div>
                                             <div id="descInputQuantity">0/2000</div>
                                         </div>
+                                        {errors.description && <ErrorP>상품 설명을 입력해주세요.</ErrorP>}
                                     </div>
                                 </li>
                                 <li className="quantity_wrap inner_list_wrap">
                                     <div className="inner_title">수량</div>
                                     <div className="inner_desc_wrap">
-                                        <div className="">
+                                        <div>
                                             <input 
                                                 type="text" id="quantityInput"
-                                                {...register("quantity", { required: true })}
+                                                {...register("quantity", { required: true, pattern: /^[0-9]+$/i  })}
                                             />&nbsp;&nbsp;&nbsp;개
                                         </div>
+                                        {errors.quantity && (errors.price.type === 'required' && <ErrorP>수량을 입력해주세요.</ErrorP>)}
+                                        {errors.quantity && (errors.quantity.type === 'pattern' && <ErrorP>숫자만 입력해주세요.</ErrorP>)}
                                     </div>
                                 </li>
                             </ul>

@@ -80,8 +80,9 @@
 }
 .image_desc {
     font-size: 14px;
-    color: dodgerblue;
+    color: deepskyblue;
     margin-top: 30px;
+    line-height: normal;
 }
 .register_image_wrap {
     display: flex;
@@ -116,7 +117,7 @@
     font-size: 13px;
 }
 .category_desc_wrap {
-    width: 894px;
+    width: 843px;
     height: 340px;
 }
 .category_class {
