@@ -38,7 +38,7 @@ router.use(cookieParser());
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/products', require('./routes/products'));
-app.use('/api/images', require('./routes/images'));
+app.use('/api/dibs', require('./routes/dibs'));
 
 
 //use this to show the image you have in node js server to client (react js)

@@ -1,56 +1,99 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { PRODUCT_SERVER, SERVER } from '../../Config';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { PRODUCT_SERVER, DIBS_SERVER, SERVER } from '../../Config';
 import { AiOutlineHome, AiFillHeart, AiFillEye } from 'react-icons/ai'
 import { FiChevronRight, FiChevronDown } from 'react-icons/fi'
 import { BsClockFill } from 'react-icons/bs'
 import styled from 'styled-components';
 import './DetailProductPage.css';
 
+// const ButtonBox = (product, user) => {
+//     if(product.product.email){
+//         console.log(2, product.product.email);
+//         return(
+//             <>
+//             {product.product.email !== user.userData.email ? 
+//                 <div style={{display: 'flex'}}>
+//                     <DibsButton>
+//                         <AiFillHeart />
+//                         <span>찜</span>
+//                         <span>0</span>
+//                     </DibsButton>
+//                     <ConnectButton>연락하기</ConnectButton>
+//                 </div>
+//                 :
+//                 <div style={{width: '100%', height: '56px'}}><Link to="/products/manange">내 상점 관리</Link></div>
+//             }
+//             </>
+//         )
+//     } else {
+//         return(
+//             <div style={{display: 'flex'}}>
+//                 <DibsButton>
+//                     <AiFillHeart />
+//                     <span>찜</span>
+//                     <span>0</span>
+//                 </DibsButton>
+//                 <ConnectButton>연락하기</ConnectButton>
+//             </div>
+//         )
+//     }
+// }
+
 function DetailProductPage(props) {
     const productId = props.match.params.productId
     const [product, setProduct] = useState([])
-
+    const user = useSelector(state => state.user)
     const productVariable = {
         productId: productId
-    }   
+    }
+
+    const onclickDibs = () => {
+        axios.post(`${DIBS_SERVER}/dibs`, 'dibs')
+            .then(response => {
+                if (response.data.success) {
+                    console.log(1, response.data)
+                } else {
+                    alert('찜 실패!')
+                }
+            })
+    }
 
     useEffect(() => {
         axios.post(`${PRODUCT_SERVER}/getProduct`, productVariable)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data)
                     setProduct(response.data.product)
                 } else {
-                    alert('Failed to get video Info')
+                    alert('상품 가져오기 실패!')
                 }
             })
 
     }, [])
-    if(product.email){
+    if (product.email) {
         const regexp = /\B(?=(\d{3})+(?!\d))/g;
         const price = product.price.toString().replace(regexp, ',');
         const nowDate = Date.now();
         let newDate = new Date(product.newDate);
         newDate = Date.parse(newDate)
-        console.log(nowDate, newDate)
         let date = '';
-        if(nowDate - newDate < (1000 * 60)){
+        if (nowDate - newDate < (1000 * 60)) {
             date = `${parseInt((nowDate - newDate) / 1000)} 초전`
-        } else if(nowDate - newDate < (1000 * 60 * 60)){
+        } else if (nowDate - newDate < (1000 * 60 * 60)) {
             date = `${parseInt((nowDate - newDate) / (1000 * 60))} 분전`
-        } else if(nowDate - newDate < (1000 * 60 * 60 * 24)){
+        } else if (nowDate - newDate < (1000 * 60 * 60 * 24)) {
             date = `${parseInt((nowDate - newDate) / (1000 * 60 * 60))} 시간전`
         } else {
             date = `${parseInt((nowDate - newDate) / (1000 * 60 * 60 * 24))} 일전`
         }
-
         return (
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <main style={{width: '1024px'}}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <main style={{ width: '1024px' }}>
                     <div>
-                        <div style={{ width: '100%', height: '78px', padding: '30px 0 20px', display: 'flex', alignItems: 'center', borderBottom: 'solid 2px #666666'}}>
-                            <div style={{ display: 'flex', alignItems: 'center'}}>
+                        <div style={{ width: '100%', height: '78px', padding: '30px 0 20px', display: 'flex', alignItems: 'center', borderBottom: 'solid 2px #666666' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div className="category-view-box">
                                     <AiOutlineHome />
                                     <span>홈</span>
@@ -59,8 +102,8 @@ function DetailProductPage(props) {
                                     <FiChevronRight />
                                     <div>
                                         <CategorySelect>
-                                            <span>{product.largeCategory}</span>
-                                            <FiChevronDown/>
+                                            <span style={{fontSize: '12px'}}>{product.largeCategory}</span>
+                                            <FiChevronDown />
                                         </CategorySelect>
                                         <CatengoryList></CatengoryList>
                                     </div>
@@ -69,8 +112,8 @@ function DetailProductPage(props) {
                                     <FiChevronRight />
                                     <div>
                                         <CategorySelect>
-                                            <span>{product.mediumCategory}</span>
-                                            <FiChevronDown/>
+                                            <span style={{fontSize: '12px'}}>{product.mediumCategory}</span>
+                                            <FiChevronDown />
                                         </CategorySelect>
                                         <CatengoryList></CatengoryList>
                                     </div>
@@ -79,24 +122,24 @@ function DetailProductPage(props) {
                                     <FiChevronRight />
                                     <div>
                                         <CategorySelect>
-                                            <span>{product.smallCategory}</span>
-                                            <FiChevronDown/>
+                                            <span style={{fontSize: '12px'}}>{product.smallCategory}</span>
+                                            <FiChevronDown />
                                         </CategorySelect>
                                         <CatengoryList></CatengoryList>
                                     </div>
                                 </CategoryBox>
                             </div>
                         </div>
-                        <div style={{ width: '100%'}}>
-                            <div style={{ width: '100%', height: '490px', padding: '30px 0', display: 'flex'}}>
+                        <div style={{ width: '100%' }}>
+                            <div style={{ width: '100%', height: '490px', padding: '30px 0', display: 'flex' }}>
                                 <div style={{ marginRight: '40px' }}>
                                     <div>
-                                        <img src={`${SERVER}/${product.filePath}`} alt="이미지" style={{ width: '430px', height: '430px', objectFit: 'cover'}}/>
+                                        <img src={`${SERVER}/${product.filePath}`} alt="이미지" style={{ width: '430px', height: '430px', objectFit: 'cover' }} />
                                     </div>
                                 </div>
                                 <div>
-                                    <div style={{ height: '350px', marginBottom: '24px'}}>
-                                        <div style={{ width: '554px', height: '130px', padding: '0 0 30px', borderBottom: 'solid 1px #CCCCCC'}}>
+                                    <div style={{ height: '350px', marginBottom: '24px' }}>
+                                        <div style={{ width: '554px', height: '130px', padding: '0 0 30px', borderBottom: 'solid 1px #CCCCCC' }}>
                                             <div style={{ fontSize: '28px', height: '35px', marginBottom: '25px' }}>{product.title}</div>
                                             <div>
                                                 <div style={{ fontSize: '40px' }}>
@@ -106,18 +149,18 @@ function DetailProductPage(props) {
                                             </div>
                                         </div>
                                         <div>
-                                            <div style={{ color: '#CCCCCC', height: '30px', margin: '15px 0 25px', display: 'flex', alignItems: 'center'}}>
-                                                <div style={{ display: 'flex'}}>
-                                                    <div style={{display: 'flex', marginRight: '10px'}}>
-                                                        <AiFillHeart style={{marginRight: '5px'}}/>
+                                            <div style={{ color: '#CCCCCC', height: '30px', margin: '15px 0 25px', display: 'flex', alignItems: 'center' }}>
+                                                <div style={{ display: 'flex' }}>
+                                                    <div style={{ display: 'flex', marginRight: '10px' }}>
+                                                        <AiFillHeart style={{ marginRight: '5px' }} />
                                                         <div>1</div>
                                                     </div>
-                                                    <div style={{display: 'flex', marginRight: '10px'}}>
-                                                        <AiFillEye style={{marginRight: '5px'}}/>
+                                                    <div style={{ display: 'flex', marginRight: '10px' }}>
+                                                        <AiFillEye style={{ marginRight: '5px' }} />
                                                         <div>64</div>
                                                     </div>
-                                                    <div style={{display: 'flex', marginRight: '10px'}}>
-                                                        <BsClockFill style={{marginRight: '5px'}}/>
+                                                    <div style={{ display: 'flex', marginRight: '10px' }}>
+                                                        <BsClockFill style={{ marginRight: '5px' }} />
                                                         <div>{date}</div>
                                                     </div>
                                                 </div>
@@ -159,14 +202,21 @@ function DetailProductPage(props) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div style={{display: 'flex'}}>
-                                        <DibsButton>
-                                            <AiFillHeart />
-                                            <span>찜</span>
-                                            <span>0</span>
-                                        </DibsButton>
-                                        <ConnectButton>연락하기</ConnectButton>
-                                    </div>
+                                    {product.email !== user.userData.email ?
+                                        <div style={{ display: 'flex' }}>
+                                            <DibsButton onClick={onclickDibs}>
+                                                <AiFillHeart />
+                                                <span>찜</span>
+                                                <span>0</span>
+                                            </DibsButton>
+                                            <ConnectButton>연락하기</ConnectButton>
+                                        </div>
+                                        :
+                                        <Link to="/products/manage" style={{ width: '100%', height: '56px'}}>
+                                            <div style={{ width: '100%', height: '56px', backgroundColor: 'orange', color: 'white', textAlign: 'center', lineHeight: '56px', fontSize: '18px', fontWeight: 'bold'}}>내 상점 관리</div>
+                                        </Link>
+                                    }
+                                    {/* <ButtonBox product={product} user={user}/> */}
                                 </div>
                             </div>
                         </div>
@@ -176,8 +226,8 @@ function DetailProductPage(props) {
         )
     } else {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center'}}>
-                <div style={{color: 'skyblue', fontSize: '26px'}}>...Loading</div>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ color: 'skyblue', fontSize: '26px' }}>...Loading</div>
             </div>
         )
     }

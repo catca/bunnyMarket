@@ -28,7 +28,7 @@ function App() {
           <Route path="/register" component={Auth(RegisterPage, null)} />
           <Route path="/products/new" component={ProductRegisterPage} />
           <Route path="/products/manage" component={ProductManagePage} />
-          <Route path="/products/:productId" component={DetailProductPage} />
+          <Route path="/products/:productId" component={Auth(DetailProductPage, null)} />
           <Route path="/search/products" component={SearchPage} />
         </Switch>
       </div>

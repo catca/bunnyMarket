@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router';
+import { QueryClient } from 'react-query';
 import queryString from 'query-string';
 import { PRODUCT_SERVER, SERVER } from '../../Config';
 import './SearchPage.css';
@@ -11,12 +12,10 @@ function SearchPage() {
     const location = useLocation();
     const query = queryString.parse(location.search);
     const [product, setProduct] = useState([])
-    const productVariable = {
-        productTitle: query.q
-    }
-
     useEffect(() => {
-        console.log(productVariable)
+        const productVariable = {
+            productTitle: queryString.parse(location.search).q
+        }
         axios.post(`${PRODUCT_SERVER}/search`, productVariable)
             .then(response => {
                 if (response.data.success) {
@@ -27,7 +26,7 @@ function SearchPage() {
                 }
             })
 
-    }, [])
+    }, [location])
 
     const renderProducts = product.map((product, index) => {
         const regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -35,7 +34,6 @@ function SearchPage() {
         const nowDate = Date.now();
         let newDate = new Date(product.newDate);
         newDate = Date.parse(newDate)
-        console.log(nowDate, newDate)
         let date = '';
         if(nowDate - newDate < (1000 * 60)){
             date = `${parseInt((nowDate - newDate) / 1000)} 초전`
@@ -50,7 +48,7 @@ function SearchPage() {
         return (
             <div className="content_product_wrap" key={index}>
                 <div className="product_img_wrap">
-                    <a href="/detail?no=${product.no}"><img className="product_img" src={`${SERVER}/${product.filePath}`} alt="${product.title}" /></a>
+                    <a href={`/products/${product._id}`}><img className="product_img" src={`${SERVER}/${product.filePath}`} alt="${product.title}" /></a>
                 </div>
                 <div className="product_article_wrap">
                     <div className="product_title">{product.title}</div>
