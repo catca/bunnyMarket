@@ -31,14 +31,13 @@ function RightMenu() {
     const handleCancel = () => {
         console.log('Clicked cancel button');
         dispatch(modalClose());
-        console.log(visible);
     };
 
     const logoutHandler = () => {
         axios.get(`${USER_SERVER}/logout`).then(response => {
             if (response.status === 200) {
                 alert('로그아웃');
-                const deleteCookie = function(name) {
+                const deleteCookie = function (name) {
                     const date = new Date();
                     document.cookie = name + "= " + "; expires=" + date.toUTCString() + "; path=/";
                 }
@@ -49,7 +48,15 @@ function RightMenu() {
             }
         });
     };
-    if (user.userData && !user.userData.isAuth) {
+    if (user.userData && user.userData.isAuth) {
+        return (
+            <LinkContainer>
+                <div>
+                    <StyledDiv style={{ marginRight: '8px' }} onClick={logoutHandler}>로그아웃</StyledDiv>
+                </div>
+            </LinkContainer>
+        )
+    } else {
         return (
             <LinkContainer>
                 <div>
@@ -68,14 +75,6 @@ function RightMenu() {
                 >
                     <LoginPage />
                 </Modal>
-            </LinkContainer>
-        )
-    } else {
-        return (
-            <LinkContainer>
-                <div>
-                    <StyledDiv style={{marginRight: '8px'}} onClick={logoutHandler}>로그아웃</StyledDiv>
-                </div>
             </LinkContainer>
         )
     }

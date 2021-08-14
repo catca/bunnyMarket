@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, useHistory } from 'react-router-dom';
 import axios from "axios";
-import { PRODUCT_SERVER } from "../../Config";
+import { PRODUCT_SERVER } from "../../../Config";
 import { useForm } from 'react-hook-form';
 import { useSelector } from "react-redux";
-import CategoryPage from "./CategoryPage";
+import CategoryPage from "../CategoryPage";
 import styled from "styled-components";
 import './ProductRegisterPage.css'
 
@@ -13,14 +13,30 @@ const ErrorP = styled.p`
     margin-top: 8px;
     margin-left: 4px;
 `;
+const Input = styled.input`
+    &:focus{
+        outline: deepskyblue solid 1px;
+        border: 0;
+    }
+`;
+const Textarea = styled.textarea`
+    &:focus{
+        outline: deepskyblue solid 1px;
+        border: 0;
+    }
+`;
 
 function ProductRegisterPage() {
+    const history = useHistory();
     const { register, formState: { errors }, handleSubmit, setValue } = useForm();
     const user = useSelector(state => state.user);
     const [fileUrl, setFileUrl] = useState(null);
     const [largeCategory, setLargeCategory] = useState({});
     const [mediumCategory, setMediumCategory] = useState({});
     const [smallCategory, setSmallCategory] = useState({});
+    const [titleCount, setTitleCount] = useState(0);
+    const [locationCount, setLocationCount] = useState(0);
+    const [descCount, setDescCount] = useState(0);
 
     const onSubmit = (values) => {
         const files = values.image;
@@ -49,6 +65,7 @@ function ProductRegisterPage() {
                 .then(response => {
                     console.log(response)
                     alert("등록되었습니다");
+                    history.push("/")
                 })
                 .catch(err => {
                 });
@@ -64,6 +81,7 @@ function ProductRegisterPage() {
         const imageFile = event.target.files[0];
         const imageUrl = URL.createObjectURL(imageFile);
         setFileUrl(imageUrl)
+        errors.image = null;
     }
     
     return (
@@ -111,12 +129,13 @@ function ProductRegisterPage() {
                                     <div className="board_title_desc_wrap inner_desc_wrap">
                                         <div className="board_title_desc">
                                             <div className="board_title_input_wrap">
-                                                <input 
-                                                    type="text" placeholder="상품 제목을 입력해주세요." id="boardTitleInput" 
+                                                <Input 
+                                                    type="text" placeholder="상품 제목을 입력해주세요." id="boardTitleInput" maxLength="40"
                                                     {...register("title", { required: true })}
+                                                    onChange={(e) => setTitleCount(e.target.value.length)}
                                                 />
                                             </div>
-                                            <div id="boardTitleInputQuantity">0/40</div>
+                                            <div id="boardTitleInputQuantity">{titleCount}/40</div>
                                         </div>
                                         {errors.title && <ErrorP>상품 제목을 입력해주세요.</ErrorP>}
                                     </div>
@@ -137,12 +156,13 @@ function ProductRegisterPage() {
                                     <div className="location_desc_wrap inner_desc_wrap">
                                         <div className="board_title_desc">
                                             <div>
-                                                <input 
-                                                    placeholder="선호 거래 지역을 입력해주세요." id="locationInput"
+                                                <Input 
+                                                    placeholder="선호 거래 지역을 입력해주세요." id="locationInput" maxLength="40"
                                                     {...register("location", { required: true })}
+                                                    onChange={(e) => setLocationCount(e.target.value.length)}
                                                 />
                                             </div>
-                                            <div id="locationInputQuantity">0/40</div>
+                                            <div id="locationInputQuantity">{locationCount}/40</div>
                                         </div>
                                         {errors.location && <ErrorP>선호 거래 지역을 입력해주세요.</ErrorP>}
                                     </div>
@@ -189,8 +209,8 @@ function ProductRegisterPage() {
                                     <div className="inner_title">가격<span>*</span></div>
                                     <div className="inner_desc_wrap">
                                         <div>
-                                            <input 
-                                                placeholder="숫자만 입력해주세요." id="priceInput"
+                                            <Input 
+                                                type="text" id="priceInput"
                                                 {...register("price", { required: true, pattern: /^[0-9]+$/i })}
                                             />&nbsp;&nbsp;&nbsp;원
                                         </div>
@@ -207,12 +227,13 @@ function ProductRegisterPage() {
                                 <li className="desc_wrap inner_list_wrap">
                                     <div className="inner_title">설명</div>
                                     <div className="inner_desc_wrap">
-                                        <textarea 
-                                            placeholder="상품 설명을 입력해주세요." rows="6" id="descInput"
+                                        <Textarea 
+                                            placeholder="상품 설명을 입력해주세요." rows="6" id="descInput" maxLength="2000"
                                             {...register("description", { required: true })}
+                                            onChange={(e) => setDescCount(e.target.value.length)}
                                             />
                                         <div>
-                                            <div id="descInputQuantity">0/2000</div>
+                                            <div id="descInputQuantity">{descCount}/2000</div>
                                         </div>
                                         {errors.description && <ErrorP>상품 설명을 입력해주세요.</ErrorP>}
                                     </div>
@@ -221,12 +242,12 @@ function ProductRegisterPage() {
                                     <div className="inner_title">수량</div>
                                     <div className="inner_desc_wrap">
                                         <div>
-                                            <input 
+                                            <Input 
                                                 type="text" id="quantityInput"
                                                 {...register("quantity", { required: true, pattern: /^[0-9]+$/i  })}
                                             />&nbsp;&nbsp;&nbsp;개
                                         </div>
-                                        {errors.quantity && (errors.price.type === 'required' && <ErrorP>수량을 입력해주세요.</ErrorP>)}
+                                        {errors.quantity && (errors.quantity.type === 'required' && <ErrorP>수량을 입력해주세요.</ErrorP>)}
                                         {errors.quantity && (errors.quantity.type === 'pattern' && <ErrorP>숫자만 입력해주세요.</ErrorP>)}
                                     </div>
                                 </li>

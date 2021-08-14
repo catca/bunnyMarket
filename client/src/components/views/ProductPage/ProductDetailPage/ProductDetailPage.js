@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { PRODUCT_SERVER, DIBS_SERVER, SERVER } from '../../Config';
+import { PRODUCT_SERVER, DIBS_SERVER, SERVER } from '../../../Config';
 import { AiOutlineHome, AiFillHeart, AiFillEye } from 'react-icons/ai'
 import { FiChevronRight, FiChevronDown } from 'react-icons/fi'
 import { BsClockFill } from 'react-icons/bs'
 import styled from 'styled-components';
-import './DetailProductPage.css';
+import './ProductDetailPage.css';
 
 // const ButtonBox = (product, user) => {
 //     if(product.product.email){
@@ -42,7 +42,7 @@ import './DetailProductPage.css';
 //     }
 // }
 
-function DetailProductPage(props) {
+function ProductDetailPage(props) {
     const productId = props.match.params.productId
     const [product, setProduct] = useState([])
     const user = useSelector(state => state.user)
@@ -95,8 +95,8 @@ function DetailProductPage(props) {
                         <div style={{ width: '100%', height: '78px', padding: '30px 0 20px', display: 'flex', alignItems: 'center', borderBottom: 'solid 2px #666666' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div className="category-view-box">
-                                    <AiOutlineHome />
-                                    <span>홈</span>
+                                    <AiOutlineHome style={{fontSize: '12px'}} />
+                                    <span style={{fontSize: '12px'}}>홈</span>
                                 </div>
                                 <CategoryBox>
                                     <FiChevronRight />
@@ -202,7 +202,7 @@ function DetailProductPage(props) {
                                             </div>
                                         </div>
                                     </div>
-                                    {product.email !== user.userData.email ?
+                                    {user.userData && (product.email !== user.userData.email ?
                                         <div style={{ display: 'flex' }}>
                                             <DibsButton onClick={onclickDibs}>
                                                 <AiFillHeart />
@@ -215,7 +215,7 @@ function DetailProductPage(props) {
                                         <Link to="/products/manage" style={{ width: '100%', height: '56px'}}>
                                             <div style={{ width: '100%', height: '56px', backgroundColor: 'orange', color: 'white', textAlign: 'center', lineHeight: '56px', fontSize: '18px', fontWeight: 'bold'}}>내 상점 관리</div>
                                         </Link>
-                                    }
+                                    )}
                                     {/* <ButtonBox product={product} user={user}/> */}
                                 </div>
                             </div>
@@ -288,4 +288,4 @@ const ConnectButton = styled.button`
     cursor: pointer;
 `;
 
-export default DetailProductPage;
+export default ProductDetailPage;

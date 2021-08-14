@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import moment from 'moment'
 import { useForm } from 'react-hook-form';
 import { registerUser } from "../../../_actions/user_actions";
+import { modalOpen } from "../../../_actions/modal_actions";
 import { useDispatch } from "react-redux";
 import "./RegisterPage.css";
 
@@ -28,10 +29,14 @@ function RegisterPage(props) {
             };
 
             dispatch(registerUser(dataToSubmit)).then(response => {
+                console.log(response.payload);
                 if (response.payload.success) {
-                    props.history.push("/login");
+                    props.history.push("/");
+                    dispatch(modalOpen());
                 } else {
-                    setErrorFromSubmit(response.payload.err.errmsg);
+                    if(response.payload.err.code === 11000){
+                        alert("중복된 이메일입니다.");
+                    }
                 }
             })
 

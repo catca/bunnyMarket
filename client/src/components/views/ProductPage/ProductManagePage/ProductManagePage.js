@@ -2,8 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { PRODUCT_SERVER, SERVER } from "../../Config";
-// import "./ProductManagePage.css"
+import { PRODUCT_SERVER, SERVER } from "../../../Config";
 import styled from "styled-components";
 
 const Th = styled.th`
@@ -46,6 +45,10 @@ function Table({ columns, data }) {
                 {data.map((props, index) => {
                     const regexp = /\B(?=(\d{3})+(?!\d))/g;
                     const price = props.price.toString().replace(regexp, ',');
+                    let modifyDate = new Date(Date.parse(props.newDate));
+                    const month = modifyDate.getMonth() < 9 ? `0${modifyDate.getMonth() + 1}` : `${modifyDate.getMonth() + 1}`
+                    const date = modifyDate.getDate() < 10 ? `0${modifyDate.getDate()}` : `${modifyDate.getDate()}`
+                    modifyDate = `${modifyDate.getFullYear()}-${month}-${date} ${modifyDate.toTimeString().slice(0, 5)}`;
                     return (
                         <tr key={index}>
                             <Td width={168}>
@@ -65,7 +68,7 @@ function Table({ columns, data }) {
                             <Td width={248}><Link to={`/products/${props._id}`}>{props.title}</Link></Td>
                             <Td width={176}>{price}원</Td>
                             <Td width={120}>0/0</Td>
-                            <Td width={120}>{props.newDate}</Td>
+                            <Td width={120}>{modifyDate}</Td>
                             <Td width={64}>
                                 <div>수정</div>
                             </Td>
@@ -129,7 +132,6 @@ function ProductManagePage() {
         axios.post(`${PRODUCT_SERVER}/productManage`, userVariable)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data.product)
                     setProduct(response.data.product)
                 } else {
                     alert('Failed to get video Info')
