@@ -3,10 +3,13 @@ import axios from 'axios';
 import { DIBS_SERVER } from '../../../Config';
 import { HeartFill } from '@styled-icons/bootstrap/HeartFill'
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { modalOpen } from '../../../../_actions/modal_actions';
 
 function Dibs(props) {
     const { dibs, setDibs, productId, userId } = props;
     const [dibsAction, setDibsAction] = useState("unDibs")
+    const dispatch = useDispatch();
 
     let variable = {};
 
@@ -33,28 +36,32 @@ function Dibs(props) {
 
     const onclickDibs = () => {
 
-        if(dibsAction === 'dibs'){
-            axios.post(`${DIBS_SERVER}/unDibs`, variable)
-            .then(response => {
-                console.log(response.data);
-                if (response.data.success) {
-                    setDibs(dibs => dibs - 1);
-                    setDibsAction('unDibs');
-                } else {
-                    alert('찜 실패!')
-                }
-            })
+        if(userId){
+            if(dibsAction === 'dibs'){
+                axios.post(`${DIBS_SERVER}/unDibs`, variable)
+                .then(response => {
+                    console.log(response.data);
+                    if (response.data.success) {
+                        setDibs(dibs => dibs - 1);
+                        setDibsAction('unDibs');
+                    } else {
+                        alert('찜 실패!')
+                    }
+                })
+            } else {
+                axios.post(`${DIBS_SERVER}/upDibs`, variable)
+                .then(response => {
+                    console.log(response.data);
+                    if (response.data.success) {
+                        setDibs(dibs => dibs + 1);
+                        setDibsAction('dibs');
+                    } else {
+                        alert('찜 실패!')
+                    }
+                })
+            }
         } else {
-            axios.post(`${DIBS_SERVER}/upDibs`, variable)
-            .then(response => {
-                console.log(response.data);
-                if (response.data.success) {
-                    setDibs(dibs => dibs + 1);
-                    setDibsAction('dibs');
-                } else {
-                    alert('찜 실패!')
-                }
-            })
+            dispatch(modalOpen());
         }
     }
 

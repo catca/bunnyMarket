@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import RightMenu from './Sections/RightMenu';
 import Search from './Search';
 import NavRouter from './Sections/NavRouter';
+import NavCategory from './Sections/NavCategory';
 import { Drawer, Button, Icon } from 'antd';
 import './Sections/Navbar.css';
 
@@ -17,7 +18,7 @@ function NavBar() {
     };
 
     return (
-        <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%', height: '180px', display: 'flex', alignItems: 'center', flexDirection: 'column', borderBottom: 'solid 1px #EEEEEE', overflow: 'hidden' }}>
+        <nav className="menu">
             <div style={{width: '100%', display: 'flex', justifyContent: 'center', borderBottom: 'solid 1px #EEEEEE'}}>
                 <div style={{width: '1024px'}}>
                     <div className="menu__container">
@@ -55,9 +56,7 @@ function NavBar() {
                 </div>
             </div>
             <div style={{width: '1024px', height: '40px'}}>
-                <div className="menu__logo">
-                    <div></div>
-                </div>
+                <NavCategory />
             </div>
         </nav>
     )
