@@ -11,11 +11,11 @@ const dibsSchema = mongoose.Schema({
     }
 }) 
 
-dibsSchema.pre('save', function( next ) {
-    let dibs = this;
-    console.log(dibs);
-    next();
-});
+// dibsSchema.pre('save', function( next ) {
+//     let dibs = this;
+//     console.log(dibs);
+//     next();
+// });
 
 const Dibs = mongoose.model('Dibs', dibsSchema);
 

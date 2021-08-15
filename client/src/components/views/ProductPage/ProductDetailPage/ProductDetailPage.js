@@ -2,64 +2,22 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { PRODUCT_SERVER, DIBS_SERVER, SERVER } from '../../../Config';
-import { AiOutlineHome, AiFillHeart, AiFillEye } from 'react-icons/ai'
-import { FiChevronRight, FiChevronDown } from 'react-icons/fi'
-import { BsClockFill } from 'react-icons/bs'
+import { PRODUCT_SERVER, SERVER } from '../../../Config';
+import { AiOutlineHome, AiFillHeart, AiFillEye } from 'react-icons/ai';
+import { FiChevronRight, FiChevronDown } from 'react-icons/fi';
+import { BsClockFill } from 'react-icons/bs';
+import Dibs from './Dibs';
 import styled from 'styled-components';
 import './ProductDetailPage.css';
 
-// const ButtonBox = (product, user) => {
-//     if(product.product.email){
-//         console.log(2, product.product.email);
-//         return(
-//             <>
-//             {product.product.email !== user.userData.email ? 
-//                 <div style={{display: 'flex'}}>
-//                     <DibsButton>
-//                         <AiFillHeart />
-//                         <span>찜</span>
-//                         <span>0</span>
-//                     </DibsButton>
-//                     <ConnectButton>연락하기</ConnectButton>
-//                 </div>
-//                 :
-//                 <div style={{width: '100%', height: '56px'}}><Link to="/products/manange">내 상점 관리</Link></div>
-//             }
-//             </>
-//         )
-//     } else {
-//         return(
-//             <div style={{display: 'flex'}}>
-//                 <DibsButton>
-//                     <AiFillHeart />
-//                     <span>찜</span>
-//                     <span>0</span>
-//                 </DibsButton>
-//                 <ConnectButton>연락하기</ConnectButton>
-//             </div>
-//         )
-//     }
-// }
-
 function ProductDetailPage(props) {
-    const productId = props.match.params.productId
-    const [product, setProduct] = useState([])
-    const user = useSelector(state => state.user)
+    const productId = props.match.params.productId;
+    const [product, setProduct] = useState([]);
+    const [dibs, setDibs] = useState(0);
+    const user = useSelector(state => state.user);
     const productVariable = {
         productId: productId
-    }
-
-    const onclickDibs = () => {
-        axios.post(`${DIBS_SERVER}/dibs`, 'dibs')
-            .then(response => {
-                if (response.data.success) {
-                    console.log(1, response.data)
-                } else {
-                    alert('찜 실패!')
-                }
-            })
-    }
+    };
 
     useEffect(() => {
         axios.post(`${PRODUCT_SERVER}/getProduct`, productVariable)
@@ -72,6 +30,7 @@ function ProductDetailPage(props) {
             })
 
     }, [])
+
     if (product.email) {
         const regexp = /\B(?=(\d{3})+(?!\d))/g;
         const price = product.price.toString().replace(regexp, ',');
@@ -153,7 +112,7 @@ function ProductDetailPage(props) {
                                                 <div style={{ display: 'flex' }}>
                                                     <div style={{ display: 'flex', marginRight: '10px' }}>
                                                         <AiFillHeart style={{ marginRight: '5px' }} />
-                                                        <div>1</div>
+                                                        <div>{dibs}</div>
                                                     </div>
                                                     <div style={{ display: 'flex', marginRight: '10px' }}>
                                                         <AiFillEye style={{ marginRight: '5px' }} />
@@ -204,11 +163,12 @@ function ProductDetailPage(props) {
                                     </div>
                                     {user.userData && (product.email !== user.userData.email ?
                                         <div style={{ display: 'flex' }}>
-                                            <DibsButton onClick={onclickDibs}>
-                                                <AiFillHeart />
-                                                <span>찜</span>
-                                                <span>0</span>
-                                            </DibsButton>
+                                            <Dibs 
+                                                productId={product._id} 
+                                                userId={user.userData._id}
+                                                dibs={dibs}
+                                                setDibs={setDibs}
+                                            />
                                             <ConnectButton>연락하기</ConnectButton>
                                         </div>
                                         :
@@ -265,17 +225,6 @@ const ProductDetail = styled.div`
 const ProductDetailList = styled.div`
     display: flex;
     margin-bottom: 25px;
-`;
-
-const DibsButton = styled.button`
-    width: 188px;
-    height: 56px;
-    background-color: #CCCCCC;
-    color: white;
-    border: 0;
-    outline: 0;
-    margin-right: 12px;
-    cursor: pointer;
 `;
 
 const ConnectButton = styled.button`
