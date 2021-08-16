@@ -17,6 +17,6 @@ const dibsSchema = mongoose.Schema({
 //     next();
 // });
 
-const Dibs = mongoose.model('Dibs', dibsSchema);
+const Favorites = mongoose.model('Favorites', dibsSchema);
 
-module.exports = { Dibs }
+module.exports = { Favorites }

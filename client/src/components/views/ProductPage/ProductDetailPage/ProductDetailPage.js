@@ -6,14 +6,14 @@ import { PRODUCT_SERVER, SERVER } from '../../../Config';
 import { AiOutlineHome, AiFillHeart, AiFillEye } from 'react-icons/ai';
 import { FiChevronRight, FiChevronDown } from 'react-icons/fi';
 import { BsClockFill } from 'react-icons/bs';
-import Dibs from './Dibs';
+import Favorites from './Favorites';
 import styled from 'styled-components';
 import './ProductDetailPage.css';
 
 function ProductDetailPage(props) {
     const productId = props.match.params.productId;
     const [product, setProduct] = useState([]);
-    const [dibs, setDibs] = useState(0);
+    const [favorites, setFavorites] = useState(0);
     const user = useSelector(state => state.user);
     const productVariable = {
         productId: productId
@@ -112,7 +112,7 @@ function ProductDetailPage(props) {
                                                 <div style={{ display: 'flex' }}>
                                                     <div style={{ display: 'flex', marginRight: '10px' }}>
                                                         <AiFillHeart style={{ marginRight: '5px' }} />
-                                                        <div>{dibs}</div>
+                                                        <div>{favorites}</div>
                                                     </div>
                                                     <div style={{ display: 'flex', marginRight: '10px' }}>
                                                         <AiFillEye style={{ marginRight: '5px' }} />
@@ -163,11 +163,11 @@ function ProductDetailPage(props) {
                                     </div>
                                     {user.userData && (product.email !== user.userData.email ?
                                         <div style={{ display: 'flex' }}>
-                                            <Dibs 
+                                            <Favorites
                                                 productId={product._id} 
                                                 userId={user.userData._id}
-                                                dibs={dibs}
-                                                setDibs={setDibs}
+                                                favorites={favorites}
+                                                setFavorites={setFavorites}
                                             />
                                             <ConnectButton>연락하기</ConnectButton>
                                         </div>

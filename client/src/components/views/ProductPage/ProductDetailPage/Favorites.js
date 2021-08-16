@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import { DIBS_SERVER } from '../../../Config';
+import { FAVORITES_SERVER } from '../../../Config';
 import { HeartFill } from '@styled-icons/bootstrap/HeartFill'
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { modalOpen } from '../../../../_actions/modal_actions';
 
-function Dibs(props) {
-    const { dibs, setDibs, productId, userId } = props;
-    const [dibsAction, setDibsAction] = useState("unDibs")
+function Favorites(props) {
+    const { favorites, setFavorites, productId, userId } = props;
+    const [favoritesAction, setFavoritesAction] = useState("notFavorites")
     const dispatch = useDispatch();
 
     let variable = {};
@@ -16,16 +16,16 @@ function Dibs(props) {
     variable = { productId: productId, userId: userId }
     useEffect(() => {
 
-        axios.post(`${DIBS_SERVER}/getDibs`, variable)
+        axios.post(`${FAVORITES_SERVER}/getFavorites`, variable)
             .then(response => {
                 if (response.data.success) {
                     //How many likes does this video or comment have 
-                    setDibs(response.data.dibs.length)
+                    setFavorites(response.data.favorites.length)
 
-                    //if I already click this dibs button or not 
-                    response.data.dibs.map(dibs => {
-                        if (dibs.userId === userId) {
-                            setDibsAction('dibs');
+                    //if I already click this favorites button or not 
+                    response.data.favorites.map(favorites => {
+                        if (favorites.userId === userId) {
+                            setFavoritesAction('favorites');
                         }
                     })
                 } else {
@@ -34,27 +34,27 @@ function Dibs(props) {
             })
     });
 
-    const onclickDibs = () => {
+    const onclickFavorites = () => {
 
         if(userId){
-            if(dibsAction === 'dibs'){
-                axios.post(`${DIBS_SERVER}/unDibs`, variable)
+            if(favoritesAction === 'favorites'){
+                axios.post(`${FAVORITES_SERVER}/downFavorites`, variable)
                 .then(response => {
                     console.log(response.data);
                     if (response.data.success) {
-                        setDibs(dibs => dibs - 1);
-                        setDibsAction('unDibs');
+                        setFavorites(favorites => favorites - 1);
+                        setFavoritesAction('notFavorites');
                     } else {
                         alert('찜 실패!')
                     }
                 })
             } else {
-                axios.post(`${DIBS_SERVER}/upDibs`, variable)
+                axios.post(`${FAVORITES_SERVER}/upFavorites`, variable)
                 .then(response => {
                     console.log(response.data);
                     if (response.data.success) {
-                        setDibs(dibs => dibs + 1);
-                        setDibsAction('dibs');
+                        setFavorites(favorites => favorites + 1);
+                        setFavoritesAction('favorites');
                     } else {
                         alert('찜 실패!')
                     }
@@ -66,18 +66,18 @@ function Dibs(props) {
     }
 
     return (
-        <DibsButton onClick={onclickDibs} dibsAction={dibsAction}>
-            <Heart dibsAction={dibsAction} />
+        <FavoritesButton onClick={onclickFavorites} favoritesAction={favoritesAction}>
+            <Heart favoritesAction={favoritesAction} />
             <span style={{marginRight: '3px'}}>찜</span>
-            <span>{dibs}</span>
-        </DibsButton>
+            <span>{favorites}</span>
+        </FavoritesButton>
     )
 }
 
-const DibsButton = styled.button`
+const FavoritesButton = styled.button`
     width: 188px;
     height: 56px;
-    background-color: ${props => props.dibsAction === 'dibs' ? 'black' : '#CCCCCC'};
+    background-color: ${props => props.favoritesAction === 'favorites' ? 'black' : '#CCCCCC'};
     color: white;
     border: 0;
     outline: 0;
@@ -90,7 +90,7 @@ const Heart = styled(HeartFill)`
     height: 14px;
     transform: translateY(-2px);
     margin-right: 3px;
-    color: ${props => props.dibsAction === 'dibs' ? 'red' : 'white'};
+    color: ${props => props.favoritesAction === 'favorites' ? 'red' : 'white'};
 `;
 
-export default Dibs
+export default Favorites

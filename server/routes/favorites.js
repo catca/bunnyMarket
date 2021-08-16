@@ -1,43 +1,43 @@
 const express = require('express');
 const router = express.Router();
-const { Dibs } = require("../models/Dibs");
+const { Favorites } = require("../models/Favorites");
 
 
 //=================================
 //             Product
 //=================================
 
-router.post("/getDibs", (req, res) => {
+router.post("/getFavorites", (req, res) => {
 
     let variable = {}
     variable = { "productId": req.body.productId }
     
-    Dibs.find(variable)
-        .exec((err, dibs) => {
+    Favorites.find(variable)
+        .exec((err, favorites) => {
             if (err) return res.status(400).send(err);
-            res.status(200).json({ success: true, dibs })
+            res.status(200).json({ success: true, favorites })
         })
 });
 
-router.post("/upDibs", (req, res) => {
+router.post("/upFavorites", (req, res) => {
 
     let variable = {}
     variable = { productId: req.body.productId, userId: req.body.userId }
 
-    const dibs = new Dibs(variable)
+    const favorites = new Favorites(variable)
     //save the like information data in MongoDB
-    dibs.save((err, dibsResult) => {
+    favorites.save((err, favoritesResult) => {
         if (err) return res.json({ success: false, err });
         res.status(200).json({ success: true })
     })
 })
-router.post("/unDibs", (req, res) => {
+router.post("/downFavorites", (req, res) => {
 
     let variable = {}
     variable = { productId: req.body.productId, userId: req.body.userId }
 
     //save the like information data in MongoDB
-    Dibs.findOneAndDelete(variable)
+    Favorites.findOneAndDelete(variable)
         .exec((err, result) => {
             if (err) return res.status(400).json({ success: false, err })
             res.status(200).json({ success: true })
