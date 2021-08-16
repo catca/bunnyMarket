@@ -6,7 +6,7 @@ function NavCategory() {
     return (
         <div>
             <Bars />
-            <Conatiner>박예찬 바보</Conatiner>
+            {/* <Conatiner>박예찬 바보</Conatiner> */}
         </div>
     )
 }
