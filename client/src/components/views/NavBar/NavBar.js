@@ -55,7 +55,7 @@ function NavBar() {
                     <NavRouter />
                 </div>
             </div>
-            <div style={{width: '1024px', height: '40px'}}>
+            <div style={{width: '1024px', display: 'flex', alignItems: 'center', height: '70px'}}>
                 <NavCategory />
             </div>
         </nav>
