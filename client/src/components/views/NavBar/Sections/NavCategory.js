@@ -5,10 +5,11 @@ import { categories } from '../../ProductPage/categories';
 import './NavCategory.css'
 
 function NavCategory() {
-    const [category, setCategory] = useState(1)
-    const [largeCategory, setLargeCategory] = useState(1)
+    const [category, setCategory] = useState(null)
+    const [largeCategory, setLargeCategory] = useState({})
     const [mediumCategory, setMediumCategory] = useState({})
     const [smallCategory, setSmallCategory] = useState({})
+    let mouseLeave;
     const onclickLarge = ({props}) => {
         setLargeCategory(props);
     }
@@ -19,13 +20,18 @@ function NavCategory() {
         setSmallCategory(props);
     }
     const onmouseover = () => {
+        clearTimeout(mouseLeave);
         setCategory('exist');
     }
     const onmouseleave = () => {
-        setCategory(null);
+        mouseLeave = setTimeout(() => {
+            setCategory(null);
+            setLargeCategory({});
+            setMediumCategory({});
+            setSmallCategory({});
+        }, 1000);
     }
     useEffect(() => {
-        console.log(mediumCategory);
         setMediumCategory({});
         setSmallCategory({});
     }, [largeCategory, setMediumCategory, setSmallCategory])
@@ -33,48 +39,60 @@ function NavCategory() {
     useEffect(() => {
         setSmallCategory({});
     }, [mediumCategory, setSmallCategory])
+
     return (
         <>
             <Bars onMouseOver={onmouseover} onMouseLeave={onmouseleave} />
             {category &&
-                <CategoryBox category={category} mediumCategory={mediumCategory} smallCategory={smallCategory}>
-                    <div class="header-category-view">
-                        <div class="header-category-view__select">
+                <CategoryBox 
+                    category={category} 
+                    largeCategory={largeCategory}
+                    mediumCategory={mediumCategory} 
+                    onMouseOver={onmouseover} 
+                    onMouseLeave={onmouseleave}>
+                    <div className="header-category-view">
+                        <div className="header-category-view__select">
                             <span>전체 카테고리</span>
-                            <i class="fas fa-chevron-right"></i>
+                            <i className="fas fa-chevron-right"></i>
                         </div>
-                        <ul class="header-category-view__list">
+                        <ul className="header-category-view__list">
                             {categories.map(props => (
                                 <li key={props.id}>
-                                    <Button type="button" onMouseOver={() => onclickLarge({props})} current={largeCategory} title={props.title}>{props.title} </Button>
+                                    <Button type="button" onMouseOver={() => onclickLarge({props})} current={largeCategory} title={props.title}>
+                                        {props.title} 
+                                    </Button>
                                 </li>
                             ))}
                         </ul>
                     </div>
-                    {largeCategory.title &&
-                        <div class="header-category-view">
-                            <div class="header-category-view__select">
-                                <span>두번째 카테고리</span>
-                                <i class="fas fa-chevron-right"></i>
+                    {largeCategory.categories &&
+                        <div className="header-category-view">
+                            <div className="header-category-view__select">
+                                <span>{largeCategory.title}</span>
+                                <i className="fas fa-chevron-right"></i>
                             </div>
-                            <ul class="header-category-view__list">
+                            <ul className="header-category-view__list">
                                 {largeCategory.categories && largeCategory.categories.map(props => (
                                     <li key={props.id}>
-                                        <Button type="button" onMouseOver={() => onclickMedium({props})} current={mediumCategory} title={props.title}>{props.title}</Button>
+                                        <Button type="button" onMouseOver={() => onclickMedium({props})} current={mediumCategory} title={props.title}>
+                                            {props.title}
+                                            </Button>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                     }
-                    {mediumCategory.title &&
-                        <div class="header-category-view">
-                            <div class="header-category-view__select">
-                                <span>세번째 카테고리</span>
+                    {mediumCategory.categories &&
+                        <div className="header-category-view">
+                            <div className="header-category-view__select">
+                                <span>{mediumCategory.title}</span>
                             </div>
-                            <ul class="header-category-view__list">
+                            <ul className="header-category-view__list">
                             {mediumCategory.categories && mediumCategory.categories.map(props => (
                                 <li key={props.id}>
-                                    <Button type="button" onMouseOver={() => onclickSmall({props})} current={smallCategory} title={props.title}>{props.title}</Button>
+                                    <Button type="button" onMouseOver={() => onclickSmall({props})} current={smallCategory} title={props.title}>
+                                        {props.title}
+                                    </Button>
                                 </li>
                             ))}
                             </ul>
@@ -94,24 +112,14 @@ const Bars = styled(ThreeBars)`
     }
 `;
 
-const Conatiner = styled.div`
-    top: calc(100%);
-    border-left: 1px solid rgb(238, 238, 238);
-    width: 240px;
-    height: 400px;
-    z-index: 10;
-    position: absolute;
-    ${props => props.hide === 'hide' ? 'display: none' : 'display: flex;'}
-`;
-
 const CategoryBox = styled.div`
     background-color: white;
     display: flex;
     top: calc(100%);
     border: var(--main-border);
     width: ${props => props.category && '240px'};
-    width: ${props => props.largeCategory && '480px'};
-    width: ${props => props.mediumCategory && '720px'};
+    width: ${props => props.largeCategory.categories && '480px'};
+    width: ${props => props.mediumCategory.categories && '720px'};
     z-index: 10;
     position: absolute;
     height: 1200px;
