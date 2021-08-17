@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { FiSearch } from 'react-icons/fi';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
@@ -16,7 +16,7 @@ function Search() {
         history.push(`/search/products?q=${keyword}`);
     }
     const onkeypress = (e) => {
-        if(e.key == "Enter"){
+        if(e.key === "Enter"){
             e.preventDefault();
             onclick();
         } 

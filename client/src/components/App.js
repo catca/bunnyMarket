@@ -9,6 +9,7 @@ import Footer from "./views/Footer/Footer";
 import ProductRegisterPage from './views/ProductPage/ProductRegisterPage/ProductRegisterPage';
 import ProductDetailPage from './views/ProductPage/ProductDetailPage/ProductDetailPage';
 import ProductManagePage from './views/ProductPage/ProductManagePage/ProductManagePage';
+import ProductCategoryPage from './views/ProductPage/ProductCategoryPage/ProductCategoryPage';
 import SearchPage from './views/SearchPage/SearchPage';
 // import PrivateRoute from '../hoc/PrivateRoute';
 // import SuperRoute from '../hoc/SuperRoute';
@@ -21,7 +22,7 @@ function App() {
     return (
         <Suspense fallback={(<div>Loading...</div>)}>
             <NavBar />
-            <div style={{ paddingTop: '180px', minHeight: 'calc(100vh - 180px)' }}>
+            <div style={{ paddingTop: '190px', minHeight: 'calc(100vh - 190px)' }}>
                 <Switch>
                     <Route exact path="/" component={Auth(MainPage, null)} />
                     {/* <Route path="/login" component={Auth(LoginPage, null)} /> */}
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/products/new" component={ProductRegisterPage} />
                     <Route path="/products/manage" component={ProductManagePage} />
                     <Route path="/products/:productId" component={Auth(ProductDetailPage, null)} />
+                    <Route path="/categories/:categoryId" component={Auth(ProductCategoryPage, null)} />
                     <Route path="/search/products" component={SearchPage} />
                 </Switch>
             </div>

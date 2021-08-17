@@ -9,7 +9,7 @@ import "./RegisterPage.css";
 function RegisterPage(props) {
     const dispatch = useDispatch();
     const { register, watch, formState: { errors }, handleSubmit } = useForm();
-    const [errorFromSubmit, setErrorFromSubmit] = useState("")
+    // const [errorFromSubmit, setErrorFromSubmit] = useState("")
     const [loading, setLoading] = useState(false);
 
     const password = useRef();
@@ -85,9 +85,9 @@ function RegisterPage(props) {
                 {errors.password_confirm && errors.password_confirm.type === "required" && <p>This password confirm field is required</p>}
                 {errors.password_confirm && errors.password_confirm.type === "validate" && <p>The passwords do not match</p>}
 
-                {errorFromSubmit &&
+                {/* {errorFromSubmit &&
                     <p>{errorFromSubmit}</p>
-                }
+                } */}
 
                 <input type="submit" disabled={loading} />
             </form>

@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
+// import axios from 'axios'
+import { useHistory } from 'react-router';
 import styled from 'styled-components'
 import { ThreeBars } from '@styled-icons/octicons/ThreeBars'
-import { categories } from '../../ProductPage/categories';
+import { categories } from '../../ProductPage/categories'
 import './NavCategory.css'
+import { PRODUCT_SERVER } from '../../../Config'
 
 function NavCategory() {
     const [category, setCategory] = useState(null)
     const [largeCategory, setLargeCategory] = useState({})
     const [mediumCategory, setMediumCategory] = useState({})
     const [smallCategory, setSmallCategory] = useState({})
+    const history = useHistory();
     let mouseLeave;
     const onclickLarge = ({props}) => {
         setLargeCategory(props);
@@ -31,6 +35,7 @@ function NavCategory() {
             setSmallCategory({});
         }, 1000);
     }
+
     useEffect(() => {
         setMediumCategory({});
         setSmallCategory({});
@@ -39,6 +44,38 @@ function NavCategory() {
     useEffect(() => {
         setSmallCategory({});
     }, [mediumCategory, setSmallCategory])
+
+    // const categoryClick = (props) => { //개열심히 했는데 필요없음 ㅜㅜ
+    //     console.log(props);
+    //     let variable = {};
+    //     if(props.largeCategory){
+    //         variable = { largeCategoryId: props.largeCategory.id, 
+    //             largeCategory: props.largeCategory.title }
+    //     } else if (props.mediumCategory){
+    //         variable = { mediumCategoryId: props.mediumCategory.id, 
+    //             mediumCategory: props.mediumCategory.title }
+    //     } else if (props.smallCategory){
+    //         variable = { smallCategoryId: props.smallCategory.id, 
+    //             smallCategory: props.smallCategory.title }
+    //     }
+    //     axios.post(`${PRODUCT_SERVER}/searchCategory`, variable)
+    //         .then(response => {
+    //             if (response.data.success) {
+    //                 //How many likes does this video or comment have 
+                    
+    //             } else {
+    //                 alert('Failed to get likes')
+    //             }
+    //         })
+    // }
+
+    const categoryClick = (props) => {
+        setCategory(null);
+        setLargeCategory({});
+        setMediumCategory({});
+        setSmallCategory({});
+        history.push(`/categories/${props.id}`);
+    }
 
     return (
         <>
@@ -58,7 +95,9 @@ function NavCategory() {
                         <ul className="header-category-view__list">
                             {categories.map(props => (
                                 <li key={props.id}>
-                                    <Button type="button" onMouseOver={() => onclickLarge({props})} current={largeCategory} title={props.title}>
+                                    <Button type="button" onMouseOver={() => onclickLarge({props})} 
+                                        current={largeCategory} title={props.title} 
+                                        onClick={() => categoryClick(largeCategory)}>
                                         {props.title} 
                                     </Button>
                                 </li>
@@ -74,9 +113,11 @@ function NavCategory() {
                             <ul className="header-category-view__list">
                                 {largeCategory.categories && largeCategory.categories.map(props => (
                                     <li key={props.id}>
-                                        <Button type="button" onMouseOver={() => onclickMedium({props})} current={mediumCategory} title={props.title}>
+                                        <Button type="button" onMouseOver={() => onclickMedium({props})} 
+                                            current={mediumCategory} title={props.title}
+                                            onClick={() => categoryClick(mediumCategory)}>
                                             {props.title}
-                                            </Button>
+                                        </Button>
                                     </li>
                                 ))}
                             </ul>
@@ -90,7 +131,9 @@ function NavCategory() {
                             <ul className="header-category-view__list">
                             {mediumCategory.categories && mediumCategory.categories.map(props => (
                                 <li key={props.id}>
-                                    <Button type="button" onMouseOver={() => onclickSmall({props})} current={smallCategory} title={props.title}>
+                                    <Button type="button" onMouseOver={() => onclickSmall({props})} 
+                                        current={smallCategory} title={props.title}
+                                        onClick={() => categoryClick(smallCategory)}>
                                         {props.title}
                                     </Button>
                                 </li>

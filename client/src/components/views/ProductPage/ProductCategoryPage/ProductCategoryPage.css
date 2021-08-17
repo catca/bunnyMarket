@@ -1,0 +1,128 @@
+/*-------------------content--------------------*/
+.content {
+	min-height: 500px;
+}
+
+.content_header {
+    width: 100vw;
+    background-color: white;
+}
+.content_header_nav {
+    width: 1024px;
+    margin: auto;
+    display: flex;
+    align-content: center;
+}
+.content_header_nav > div {
+    width: 120px;
+    height: 70px;
+    line-height: 70px;
+}
+
+.content_container {
+    width: 1024px;
+    margin: auto;
+}
+.content_nav {
+    display: flex;
+    margin-top: 30px;
+    justify-content: space-between;
+}
+.search_name {
+    color: red;
+}
+
+.search_count {
+    color: #777777;
+    margin-left: 2px;
+}
+
+.sorting_method {
+    display: flex;
+}
+
+.sort_item {
+    margin-left: 16px;
+}
+
+.sort_item::after {
+    content: '\00a0\00a0\00a0\00a0|';
+}
+
+.high_price_accuracy_sort::after {
+    content: '';
+}
+
+.content_inner {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.content_product_wrap {
+    width: 196px;
+    height: 316px;
+    margin-bottom: 12px;
+    border: solid 1px #AAAAAA;
+    margin-right: 11px;
+}
+
+.content_inner div:nth-child(5n) {
+	margin-right: 0;
+}
+
+.product_img_wrap {
+    width: 196px;
+    height: 196px;
+}
+
+.product_img {
+    width: 194px;
+    height: 194px;
+    object-fit: cover;
+}
+
+.product_article_wrap {
+    width: 196px;
+    height: 80px;
+    padding: 15px 10px;
+    border-bottom: solid 1px #AAAAAA;
+}
+
+.product_title {
+    height: 34px;
+}
+
+.product_article {
+    display: flex;
+    justify-content: space-between;
+}
+.product_price {
+	font-weight: bold;
+}
+.product_price::after {
+    font-size: 10px;
+    content: ' 원';
+}
+
+.product_regdate {
+    font-size: 10px;
+    line-height: 20px;
+}
+
+.product_area {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 12px;
+}
+
+.nothing__text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 2rem;
+	font-weight: bold;
+	color: #EE5058;
+	transform: translate(-50%, -50%);
+}

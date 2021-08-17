@@ -22,8 +22,7 @@ function Content() {
         const price = product.price.toString().replace(regexp, ',');
         const nowDate = Date.now();
         let newDate = new Date(product.newDate);
-        newDate = Date.parse(newDate)
-        console.log(nowDate, newDate)
+        newDate = Date.parse(newDate);
         let date = '';
         if(nowDate - newDate < (1000 * 60)){
             date = `${parseInt((nowDate - newDate) / 1000)} 초전`

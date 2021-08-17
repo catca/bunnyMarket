@@ -100,4 +100,26 @@ router.post("/search", (req, res) => {
     })
 });
 
+router.post("/searchCategory", (req, res) => {
+    console.log(req.body)
+    Product.find({ 
+        $or: [
+            {largeCategoryId: req.body.categoryId},
+            {mediumCategoryId: req.body.categoryId},
+            {smallCategoryId: req.body.categoryId}
+        ] 
+    })
+    .exec((err, product) => {
+        if(err){ 
+            console.log(err);
+            return res.status(400).send(err);
+        }
+        product.map(product => {
+            product.newDate = modifyDate(product.newDate);
+            if(product.modifyDate) product.modifyDate = modifyDate(product.modifyDate);
+        })
+        res.status(200).json({ success: true, product })
+    })
+});
+
 module.exports = router;

@@ -46,6 +46,15 @@ const productSchema = mongoose.Schema({
     smallCategory: {
         type:String
     },
+    largeCategoryId: {
+        type:String
+    },
+    mediumCategoryId: {
+        type:String
+    },
+    smallCategoryId: {
+        type:String
+    },
     newDate: {
         type:Date
     },

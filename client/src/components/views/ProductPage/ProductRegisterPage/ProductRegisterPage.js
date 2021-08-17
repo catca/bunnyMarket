@@ -58,6 +58,9 @@ function ProductRegisterPage() {
                     largeCategory: largeCategory.title,
                     mediumCategory: mediumCategory.title,
                     smallCategory: smallCategory.title,
+                    largeCategoryId: largeCategory.id,
+                    mediumCategoryId: mediumCategory.id,
+                    smallCategoryId: smallCategory.id,
                     newDate: date,
                     salesStatus: 'sale'
                 };
