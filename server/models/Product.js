@@ -88,7 +88,7 @@ productSchema.pre('save', function( next ) {
 productSchema.pre('find', function( next ) {
     let product = this;
     
-    console.log(product.schema.obj.newDate);
+    // console.log(product.schema.obj.newDate);
     next();
 });
 

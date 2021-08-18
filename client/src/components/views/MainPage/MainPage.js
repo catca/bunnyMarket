@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Content from './Content';
 import { SERVER } from '../../Config';
 import { Carousel } from 'antd';
-import './Main.css';
+import './MainPage.css';
 
 const Img = styled.img`
     height: 300px;

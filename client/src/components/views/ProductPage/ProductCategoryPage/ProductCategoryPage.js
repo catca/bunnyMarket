@@ -7,6 +7,35 @@ import './ProductCategoryPage.css';
 function ProductCategoryPage(props) {
     const categoryId = props.match.params.categoryId;
     const [product, setProduct] = useState([])
+    const [categoryTitle, setCategoryTitle] = useState("");
+
+    let keyword = categories.find(item => {
+        if(item.id === categoryId) return true 
+    });
+    if(!keyword){
+        categories.forEach(item => {
+            if(keyword) return true
+            if(item.categories) {
+                keyword = item.categories.find(item => {
+                    if(item.id === categoryId) return true 
+                })
+            }
+        });
+    }
+    if(!keyword){
+        categories.forEach(item => {
+            if(item.categories) {
+                item.categories.forEach(item => {
+                    if(keyword) return true
+                    if(item.categories) {
+                        keyword = item.categories.find(item => {
+                            if(item.id === categoryId) return true 
+                        })
+                    }
+                })
+            }
+        })
+    }
 
     useEffect(() => {
         const categoryVariable = {
@@ -14,9 +43,7 @@ function ProductCategoryPage(props) {
         };
         axios.post(`${PRODUCT_SERVER}/searchCategory`, categoryVariable)
             .then(response => {
-                console.log(response.data)
                 if (response.data.success) {
-                    console.log(response.data.product)
                     setProduct(response.data.product)
                 } else {
                     alert('Failed to get video Info')
@@ -71,7 +98,7 @@ function ProductCategoryPage(props) {
                 <div className="content_nav">
                     <div className="search_result">
                         <span className="search_name">
-                            카테고리
+                            {keyword && keyword.title}
                         </span>의 전체상품
                         <span className="search_count">{product && product.length}개</span>
                     </div>
