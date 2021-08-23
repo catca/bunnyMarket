@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const { Favorites } = require("../models/Favorites");
+const { Product } = require("../models/Product");
 
 
 //=================================
-//             Product
+//            Favorites
 //=================================
+
+function modifyDate(date){
+    const kst = date.getTime() + (date.getTimezoneOffset() * 60 * 1000);
+    return kst
+}
 
 router.post("/getFavorites", (req, res) => {
 
@@ -43,5 +49,39 @@ router.post("/downFavorites", (req, res) => {
             res.status(200).json({ success: true })
         })
 })
+
+router.post("/getProducts", (req, res) => {
+    Favorites.find({ userId : req.body.user_id})
+    .exec((err, favorites) => {
+        if(err) return res.status(400).send(err);
+        const favorite = favorites.map(favorites => {
+            return {'_id' : favorites.productId }
+        })
+        Product.find({ 
+            $or: favorite
+        })
+        .exec((err, product) => {
+            if(err){ 
+                console.log(err);
+                return res.status(400).send(err);
+            }
+            product.map(product => {
+                product.newDate = modifyDate(product.newDate);
+                if(product.modifyDate) product.modifyDate = modifyDate(product.modifyDate);
+            })
+            res.status(200).json({ success: true, product })
+        })
+    })
+
+    // Product.find({ "email" : req.body.userId })
+    // .exec((err, product) => {
+    //     if(err) return res.status(400).send(err);
+    //     product.map(product => {
+    //         product.newDate = modifyDate(product.newDate);
+    //         if(product.modifyDate) product.modifyDate = modifyDate(product.modifyDate);
+    //     })
+    //     res.status(200).json({ success: true, product })
+    // })
+});
 
 module.exports = router;

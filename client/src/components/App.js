@@ -11,6 +11,7 @@ import ProductDetailPage from './views/ProductPage/ProductDetailPage/ProductDeta
 import ProductManagePage from './views/ProductPage/ProductManagePage/ProductManagePage';
 import ProductCategoryPage from './views/ProductPage/ProductCategoryPage/ProductCategoryPage';
 import SearchPage from './views/SearchPage/SearchPage';
+import ShopPage from './views/ShopPage/ShopPage';
 // import PrivateRoute from '../hoc/PrivateRoute';
 // import SuperRoute from '../hoc/SuperRoute';
 
@@ -22,19 +23,21 @@ function App() {
     return (
         <Suspense fallback={(<div>Loading...</div>)}>
             <NavBar />
-            <div style={{ paddingTop: '190px', minHeight: 'calc(100vh - 190px)' }}>
-                <Switch>
-                    <Route exact path="/" component={Auth(MainPage, null)} />
-                    {/* <Route path="/login" component={Auth(LoginPage, null)} /> */}
-                    <Route path="/register" component={Auth(RegisterPage, null)} />
-                    <Route path="/products/new" component={ProductRegisterPage} />
-                    <Route path="/products/manage" component={ProductManagePage} />
-                    <Route path="/products/:productId" component={Auth(ProductDetailPage, null)} />
-                    <Route path="/categories/:categoryId" component={Auth(ProductCategoryPage, null)} />
-                    <Route path="/search/products" component={SearchPage} />
-                </Switch>
-            </div>
-            <Footer />
+                <div style={{ paddingTop: '190px', minHeight: 'calc(100vh - 190px)' }}>
+                    <Switch>
+                        <Route exact path="/" component={Auth(MainPage, null)} />
+                        {/* <Route path="/login" component={Auth(LoginPage, null)} /> */}
+                        <Route path="/register" component={Auth(RegisterPage, null)} />
+                        <Route path="/products/new" component={ProductRegisterPage} />
+                        <Route path="/products/manage" component={ProductManagePage} />
+                        <Route path="/shop/:userId/product" component={ShopPage} />
+                        <Route path="/shop/:userId/favorite" component={ShopPage} />
+                        <Route path="/products/:productId" component={Auth(ProductDetailPage, null)} />
+                        <Route path="/categories/:categoryId" component={Auth(ProductCategoryPage, null)} />
+                        <Route path="/search/products" component={SearchPage} />
+                    </Switch>
+                </div>
+                <Footer />
         </Suspense>
     );
 }

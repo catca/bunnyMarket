@@ -61,8 +61,8 @@ const productSchema = mongoose.Schema({
     modifyDate: {
         type:Date
     },
-    sellsStatus: {
-        tpe:String
+    salesStatus: {
+        type:String
     }
 })
 

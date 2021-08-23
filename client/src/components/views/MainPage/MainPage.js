@@ -14,7 +14,7 @@ function MainPage() {
 
     return (
         <section style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-            <div style={{ width: '1024px', height: '1000px' }}>
+            <div style={{ width: '1024px' }}>
                 <Carousel autoplay>
                     <div>
                         <Img src={`${SERVER}/server/sliderImage/662404945.jpg`} alt="" />

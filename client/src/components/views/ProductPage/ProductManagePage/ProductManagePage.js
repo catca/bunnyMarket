@@ -30,8 +30,21 @@ const Img = styled.img`
     object-fit: cover;
 `;
 
-function Table({ columns, data }) {
-
+const Table = ({ columns, data }) => {
+    const [sales, setSales] = useState([])
+    useEffect(() => {
+        const sale = data.map(item => {
+            if(item.salesStatus === 'sale'){
+                return {'salesStatus': 'sale'}
+            } else {
+                return {'salesStatus': 'soldOut'}
+            }
+        })
+        console.log(sale)
+        if(sale){
+            setSales(sale)
+        }
+    }, [])
     return (
         <table style={{ borderCollapse: 'collapse' }}>
             <thead>
@@ -49,19 +62,25 @@ function Table({ columns, data }) {
                     const month = modifyDate.getMonth() < 9 ? `0${modifyDate.getMonth() + 1}` : `${modifyDate.getMonth() + 1}`
                     const date = modifyDate.getDate() < 10 ? `0${modifyDate.getDate()}` : `${modifyDate.getDate()}`
                     modifyDate = `${modifyDate.getFullYear()}-${month}-${date} ${modifyDate.toTimeString().slice(0, 5)}`;
+                    console.log(5)
                     return (
                         <tr key={index}>
                             <Td width={168}>
-                                {console.log(props)}
                                 <Img src={`${SERVER}/${props.filePath}`} alt="곰돌이" />
                             </Td>
                             <Td width={128}>
                                 <div>
                                     <div>
                                         <div>
-                                            <div>판매 중</div>
+                                            <div onClick={() => {setSales('exist')}}>
+                                                {/* {sales[index].salesStatus === 'sale' ? '판매 중' : '판매완료'} */}
+                                                {sales}
+                                            </div>
                                         </div>
-                                        <div></div>
+                                        {/* <div>
+                                            <div>판매 중</div>
+                                            <div>판매완료</div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </Td>
@@ -83,8 +102,11 @@ function Table({ columns, data }) {
 function ProductManagePage() {
     const user = useSelector(state => state.user);
     const [product, setProduct] = useState([])
-    const userVariable = {
-        userId: user.userData.email
+    let userVariable;
+    if(user.userData){
+        userVariable = {
+            userId: user.userData.email
+        }
     }
 
     const columns = useMemo(

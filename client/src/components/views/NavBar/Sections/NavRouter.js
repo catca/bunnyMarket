@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { auth } from '../../../../_actions/user_actions';
 import { modalOpen } from '../../../../_actions/modal_actions';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function NavRouter() {
     const history = useHistory();
     const dispatch = useDispatch();
+    const user = useSelector(state => state.user)
     const onclickRegister = () => {
         dispatch(auth()).then(response => {
             //Not Loggined in Status 
@@ -24,7 +25,9 @@ function NavRouter() {
             if (!response.payload.isAuth) {
                 dispatch(modalOpen());
             } else {
-                history.push("/products/manage")
+                if(user.userData){
+                    history.push(`/shop/${user.userData._id}/product`)
+                }
             }
         })
     }
